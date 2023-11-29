@@ -1,0 +1,102 @@
+name: Hydrogen
+version: '${version}'
+main: es.skepz.hydrogen.Hydrogen
+api-version: '1.20'
+prefix: Hydrogen
+author: Skepz
+
+commands:
+  rules:
+    description: view the server rules
+  spawn:
+    description: teleport to spawn
+  warp:
+    description: teleport to a warp
+  home:
+    description: teleport to a home
+  sethome:
+    description: set a home
+  delhome:
+    description: delete a home
+
+  tpa:
+    description: request to teleport to a player
+  tphere:
+    description: request to teleport a player to you
+    aliases: tpahere
+  tpaccept:
+    description: accept a request for teleportation
+  tpdeny:
+    description: deny a request for teleportation
+    aliases: tpadeny
+  tpcancel:
+    description: cancel a request you sent for teleportation
+    aliases: tpacancel
+  tplist:
+    description: list any incoming requests to teleport
+
+  balance:
+    description: check your balance
+    aliases: bal
+  pay:
+    description: pay a player
+
+  cfgreload:
+    description: reload the config
+  setwarp:
+    description: set a warp
+  delwarp:
+    description: delete a warp
+  setspawn:
+    description: set the spawn location
+  world:
+    description: manage worlds (create, delete, list, tp)
+  eco:
+    description: manage player balances
+  meta:
+    description: Change the item meta of your current item
+  rank:
+    description: manage and set ranks
+  lookup:
+    description: lookup a player's information
+  permission:
+    description: manage the permissions of a player
+    aliases: perm
+  repair:
+    description: repair the item in your hand
+
+  ban:
+    description: ban a player
+  tempban:
+    description: temporarily ban a player
+  unban:
+    description: unban a player
+  mute:
+    description: mute a player
+  tempmute:
+    description: temporarily mute a player
+  unmute:
+    description: unmute a player
+  kick:
+    description: kick a player
+
+  op:
+    description: manage operator status of a player
+  gamemode:
+    description: change your gamemode
+    aliases: gm
+  enchant:
+    description: enchant an item
+    aliases: ench
+
+  fly:
+    description: toggle flight
+  hat:
+    description: wear the item in your hand as a hat
+
+  core_confirm:
+    description: confirm a command
+    visible: false
+  core_cancel:
+    description: cancel a command
+    visible: false
