@@ -2,6 +2,7 @@ package es.skepz.hydrogen.utils
 
 import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.skepzlib.checkPermission
 import es.skepz.hydrogen.skepzlib.colorize
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
@@ -92,5 +93,5 @@ fun reloadLogout(plugin: Hydrogen, player: Player) {
 
 fun checkVerification(core: Hydrogen, player: Player): Boolean {
     val file = getUserFile(core, player)
-    return file.isVerified()
+    return file.isVerified() || checkPermission(player, "hydrogen.verification.bypass")
 }

@@ -79,7 +79,7 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
             "$rankPrefix $nameColor"
         }
 
-        serverBroadcast("$verificationPrefix$prefix${player.name} &7> $chatColor${colorize(msgPlain)}")
+        serverBroadcast("$verificationPrefix $prefix${player.name} &7> $chatColor${colorize(msgPlain)}")
     }
 
 }

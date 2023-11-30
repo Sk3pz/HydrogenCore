@@ -5,7 +5,9 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.checkVerification
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.util.StringUtil
 
 class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <player>", 1,
     "hydrogen.command.verify", false, true) {
@@ -24,7 +26,11 @@ class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <play
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {
-        return emptyList()
+        val completions = mutableListOf<String>()
+        if (args.size == 1) {
+            StringUtil.copyPartialMatches(args[0], Bukkit.getServer().onlinePlayers.map { p -> p.name }, completions)
+        }
+        return completions
     }
 
 }
