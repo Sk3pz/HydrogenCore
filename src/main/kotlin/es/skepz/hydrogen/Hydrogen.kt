@@ -122,6 +122,7 @@ class Hydrogen : JavaPlugin() {
         UnmuteCommand(this).register()
 
         ConfigsCommand(this).register()
+        SudoCommand(this).register()
         SetWarpCommand(this).register()
         DelWarpCommand(this).register()
         EcoCommand(this).register()

@@ -43,6 +43,8 @@ commands:
 
   cfgreload:
     description: reload the config
+  sudo:
+    description: run a command as console
   setwarp:
     description: set a warp
   delwarp:
