@@ -6,6 +6,7 @@ import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
 class UnverifyCommand(val core: Hydrogen) : CoreCMD(core, "unverify", "/unverify <player>", 1,
@@ -22,6 +23,9 @@ class UnverifyCommand(val core: Hydrogen) : CoreCMD(core, "unverify", "/unverify
 
         file.setVerified(false)
         sendMessage(sender, "&7Player &b${player.name} &7has been unverified!")
+        if (player is Player) {
+            sendMessage(player, "&7You have been unverified!")
+        }
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

@@ -5,8 +5,10 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.checkVerification
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
+import es.skepz.hydrogen.utils.refreshPermissions
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
 class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <player>", 1,
@@ -23,6 +25,11 @@ class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <play
 
         file.setVerified(true)
         sendMessage(sender, "&7Player &b${player.name} &7has been verified!")
+
+        if (player is Player) {
+            refreshPermissions(core, player)
+            sendMessage(player, "&7You have been verified!")
+        }
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

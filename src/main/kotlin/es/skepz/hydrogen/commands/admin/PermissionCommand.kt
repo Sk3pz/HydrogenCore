@@ -6,6 +6,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
 import es.skepz.hydrogen.utils.getUserFile
+import es.skepz.hydrogen.utils.refreshPermissions
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -32,12 +33,20 @@ class PermissionCommand(val core: Hydrogen) : CoreCMD(core, "permission", "/perm
                 val permission = args[2]
                 file.addPerm(permission)
                 sendMessage(sender, "&7Added permission &b$permission &7to &b${target.name}&7!")
+                if (target is Player) {
+                    refreshPermissions(core, target)
+                    sendMessage(target, "&7Your permissions have been updated!")
+                }
             }
             "remove" -> {
                 if (args.size != 3) return sendMessage(sender, "&cInvalid usage! Do &7/permission remove <&7player&c> <&7permission&c>!")
                 val permission = args[2]
                 file.removePerm(permission)
                 sendMessage(sender, "&7Removed permission &b$permission &7from &b${target.name}&7!")
+                if (target is Player) {
+                    refreshPermissions(core, target)
+                    sendMessage(target, "&7Your permissions have been updated!")
+                }
             }
             "list" -> {
                 sendMessage(sender, "&b${target.name}&7's permissions: &b${file.getPerms().joinToString("&7, &b")}")
