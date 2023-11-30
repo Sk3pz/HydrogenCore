@@ -110,7 +110,7 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
                     val remainder = (amount - foundDiamonds) % 9
                     removeBlocks(player, blocksToBreakDown + if (remainder > 0) 1 else 0)
                     if (remainder > 0) {
-                        addDiamonds(core, player, 0, remainder)
+                        addDiamonds(core, player, 0, 9 - remainder)
                     }
                 }
 
