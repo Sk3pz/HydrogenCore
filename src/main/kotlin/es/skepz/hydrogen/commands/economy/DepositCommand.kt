@@ -3,6 +3,7 @@ package es.skepz.hydrogen.commands.economy
 import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
+import es.skepz.hydrogen.utils.addDiamonds
 import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
@@ -103,7 +104,16 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
                 sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7!")
             }
             "diamonds", "d", "diamond" -> {
-                if (foundDiamonds < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
+                if ((foundDiamonds + (foundBlocks * 9)) < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
+                if (foundDiamonds < amount) {
+                    val blocksToBreakDown = (amount - foundDiamonds) / 9
+                    val remainder = (amount - foundDiamonds) % 9
+                    removeBlocks(player, blocksToBreakDown + if (remainder > 0) 1 else 0)
+                    if (remainder > 0) {
+                        addDiamonds(core, player, 0, remainder)
+                    }
+                }
+
                 removeDiamonds(player, amount)
                 file.addToBal(amount)
                 sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7!")
