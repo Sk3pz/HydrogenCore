@@ -114,7 +114,7 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
                     }
                 }
 
-                removeDiamonds(player, amount)
+                removeDiamonds(player, foundDiamonds)
                 file.addToBal(amount)
                 sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7!")
             }
