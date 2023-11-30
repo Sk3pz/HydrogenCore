@@ -22,8 +22,12 @@ fun refreshPermissions(plugin: Hydrogen, player: Player) {
     // get the permissions from the rank and the user file
     val rank = file.getRank()
     val rankPerms = plugin.files.ranks.cfg.getStringList("ranks.$rank.permissions")
+
     val ufPerms = file.getPerms()
     val op = plugin.files.ranks.cfg.getBoolean("ranks.$rank.isOp") || file.isOp()
+
+    // get the verification permissions
+    val verifPerms = plugin.files.config.cfg.getStringList("verification.verified-perms")
 
     // give user the permissions
     for (perm in rankPerms) {
@@ -31,6 +35,11 @@ fun refreshPermissions(plugin: Hydrogen, player: Player) {
     }
     for (perm in ufPerms) {
         player.addAttachment(plugin, perm, true)
+    }
+    if (checkVerification(plugin, player)) {
+        for (perm in verifPerms) {
+            player.addAttachment(plugin, perm, true)
+        }
     }
     player.recalculatePermissions()
 

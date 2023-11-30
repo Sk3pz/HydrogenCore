@@ -34,9 +34,12 @@ class ServerFiles(private val plugin: Hydrogen) {
         reload()
 
         config.default("custom-chat", true)
+
+        // verification
         config.default("verification.enabled", false)
         config.default("verification.prefix", "&a&l✔")
         config.default("verification.unverified-prefix", "&c&l✘")
+        config.default("verification.verified-perms", listOf(""))
 
         val file = File(plugin.dataFolder.toString(), "ranks.yml")
         if (!file.exists())
