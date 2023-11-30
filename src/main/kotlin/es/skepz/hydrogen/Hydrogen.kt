@@ -25,6 +25,7 @@ import es.skepz.hydrogen.verification.commands.UnverifyCommand
 import es.skepz.hydrogen.verification.commands.VerifyCommand
 import es.skepz.hydrogen.verification.events.VerificationEvents
 import org.bukkit.Location
+import org.bukkit.NamespacedKey
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.plugin.java.JavaPlugin
@@ -41,6 +42,8 @@ class Hydrogen : JavaPlugin() {
     val backLocations = HashMap<UUID, Location>()
 
     val confirmMap = HashMap<UUID, (confirm: Boolean) -> Unit>()
+
+    val diamondKey = NamespacedKey(this, "economy_diamonds")
 
     override fun onEnable() {
 
