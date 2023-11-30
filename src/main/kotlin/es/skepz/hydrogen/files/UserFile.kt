@@ -19,7 +19,7 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
     init {
         default("name", Bukkit.getOfflinePlayer(player).name)
         default("rank", "default")
-        default("balance", plugin.files.config.cfg.getInt("starting-balance"))
+        default("balance", plugin.files.config.cfg.getInt("economy.starting-balance"))
         default("op", false)
         default("verified", false)
 
@@ -150,17 +150,17 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
         set("time.last-logoff", Date().time)
     }
 
-    fun getBal(): Long {
+    fun getBal(): Int {
         reload()
-        return cfg.getLong("balance")
+        return cfg.getInt("balance")
     }
-    fun setBal(bal: Long) {
+    fun setBal(bal: Int) {
         set("balance", bal)
     }
-    fun addToBal(amount: Long) {
+    fun addToBal(amount: Int) {
         set("balance", getBal() + amount)
     }
-    fun rmFromBal(amount: Long) {
+    fun rmFromBal(amount: Int) {
         set("balance", getBal() - amount)
     }
 

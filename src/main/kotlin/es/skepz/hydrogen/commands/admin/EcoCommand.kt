@@ -22,6 +22,8 @@ class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "/eco <give|take|set
         val file = getOfflineUserFileRaw(core, targetPlayer.uniqueId) ?:
             return sendMessage(sender, "&cThat player does not exist or has not played before!")
 
+        val moneySymbol = core.files.getMoneySymbol()
+        
         when (mode) {
             "give" -> {
                 if (args.size != 3) {
@@ -30,9 +32,9 @@ class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "/eco <give|take|set
                 val amount = args[2].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
                 file.cfg.set("balance", file.cfg.getInt("balance") + amount)
                 file.save()
-                sendMessage(sender, "&7You have given &b$target &7$&b$amount&7.")
+                sendMessage(sender, "&7You have given &b$target &3$moneySymbol&b$amount&7.")
                 if (targetPlayer is Player) {
-                    sendMessage(targetPlayer, "&7You have been given $&b$amount &7by &b${sender.name}&7.")
+                    sendMessage(targetPlayer, "&7You have been given &3$moneySymbol&b$amount &7by &b${sender.name}&7.")
                 }
             }
             "take" -> {
@@ -42,9 +44,9 @@ class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "/eco <give|take|set
                 val amount = args[2].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
                 file.cfg.set("balance", file.cfg.getInt("balance") - amount)
                 file.save()
-                sendMessage(sender, "&7You have taken $&b$amount &7from &b$target&7.")
+                sendMessage(sender, "&7You have taken &3$moneySymbol&b$amount &7from &b$target&7.")
                 if (targetPlayer is Player) {
-                    sendMessage(targetPlayer, "&7You have had $&b$amount &7taken by &b${sender.name}&7.")
+                    sendMessage(targetPlayer, "&7You have had &3$moneySymbol&b$amount &7taken by &b${sender.name}&7.")
                 }
             }
             "set" -> {
@@ -54,13 +56,13 @@ class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "/eco <give|take|set
                 val amount = args[2].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
                 file.cfg.set("balance", amount)
                 file.save()
-                sendMessage(sender, "&7You have set &b$target&7's balance to $&b$amount&7.")
+                sendMessage(sender, "&7You have set &b$target&7's balance to &3$moneySymbol&b$amount&7.")
                 if (targetPlayer is Player) {
-                    sendMessage(targetPlayer, "&7Your balance has been set to $&b$amount &7by &b${sender.name}&7.")
+                    sendMessage(targetPlayer, "&7Your balance has been set to &3$moneySymbol&b$amount &7by &b${sender.name}&7.")
                 }
             }
             "check" -> {
-                sendMessage(sender, "&7$target&7's balance: $&b${file.cfg.getInt("balance")}&7.")
+                sendMessage(sender, "&7$target&7's balance: &3$moneySymbol&b${file.cfg.getInt("balance")}&7.")
             }
             else -> {
                 sendMessage(sender, "&cInvalid mode. Valid modes: give, take, set.")

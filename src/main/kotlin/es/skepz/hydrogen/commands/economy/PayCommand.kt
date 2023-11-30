@@ -4,6 +4,7 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getUserFile
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
@@ -14,12 +15,14 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "/pay <player> <amou
         val player = getPlayer() ?: return
         val target = args[0]
 
+        val moneySymbol = core.files.getMoneySymbol()
+
         // get the player if they exist
         val targetPlayer = core.server.getPlayer(target) ?:
             return sendMessage(sender, "&cThat player does not exist or is not online!")
 
         // get the amount specified by the user
-        val amount = args[1].toLongOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
+        val amount = args[1].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
 
         // get the player's user file
         val file = getUserFile(core, player)
@@ -35,20 +38,15 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "/pay <player> <amou
 
         targetFile.addToBal(amount)
         file.rmFromBal(amount)
-        sendMessage(sender, "&7You have sent &b$target &7$&b$amount&7.")
-        sendMessage(targetPlayer, "&7You have received $&b$amount&7 from &b${player.name}&7.")
+        sendMessage(sender, "&7You have sent &b$target &3$moneySymbol&b$amount&7.")
+        sendMessage(targetPlayer, "&7You have received &3$moneySymbol&b$amount&7 from &b${player.name}&7.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {
         val completions = mutableListOf<String>()
-
-        val players = org.bukkit.Bukkit.getServer().onlinePlayers
-        val names = java.util.ArrayList<String>()
-        for (p in players) {
-            names.add(p.name)
+        if (args.size == 1) {
+            StringUtil.copyPartialMatches(args[0], Bukkit.getServer().onlinePlayers.map { p -> p.name }, completions)
         }
-        StringUtil.copyPartialMatches(args[0], names, completions)
-
         return completions
     }
 }

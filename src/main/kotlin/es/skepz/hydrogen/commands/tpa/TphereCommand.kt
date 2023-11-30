@@ -28,7 +28,7 @@ class TphereCommand(val core: Hydrogen) : CoreCMD(core, "tphere", "&c/tphere <pl
         IMessage("&7&lTeleport Request&r\n")
             .add("&b${player.name} &7Would like to teleport &o&nyou to them&7.&r\n")
             .addHoverableClickCmd("&a&oAccept&r\n", "/tpaccept ${player.name}", "&7Allow &b${player.name} &7to teleport to you to them")
-            .addHoverableClickCmd("&c&oDeny&r\n", "/tpdeny ${player.name}", "&7Deny &b${player.name} &7the request")
+            .addHoverableClickCmd("&c&oDeny&r", "/tpdeny ${player.name}", "&7Deny &b${player.name} &7the request")
             .send(target)
 
 

@@ -34,7 +34,12 @@ class ServerFiles(private val plugin: Hydrogen) {
         reload()
 
         config.default("custom-chat", true)
-        config.default("starting-balance", 100)
+
+        config.default("economy.money-is-diamonds", true)
+        config.default("economy.starting-balance", 0)
+        config.default("economy.money-symbol", "♢") // ♦
+
+        config.default("back-command-includes-death-location", true)
 
         // verification
         config.default("verification.enabled", false)
@@ -45,7 +50,7 @@ class ServerFiles(private val plugin: Hydrogen) {
         val file = File(plugin.dataFolder.toString(), "ranks.yml")
         if (!file.exists())
             plugin.saveResource("ranks.yml", false)
-        ranks = CFGFile(plugin,    "ranks",    "")
+        ranks = CFGFile(plugin, "ranks", "")
 
         rules.default("rules", listOf("Be polite and respectful", "No cheating or using unfair game advantages",
             "No leaking personal information", "No arguing with the staff team", "No begging for a role"))
@@ -62,5 +67,9 @@ class ServerFiles(private val plugin: Hydrogen) {
             plugin.saveResource("ranks.yml", false)
         ranks = CFGFile(plugin,    "ranks",    "")
         restore()
+    }
+
+    fun getMoneySymbol(): String {
+        return config.cfg.getString("economy.money-symbol") ?: "♢"
     }
 }

@@ -7,9 +7,10 @@ import es.skepz.hydrogen.commands.confirmation.CancelCommand
 import es.skepz.hydrogen.commands.confirmation.ConfirmCommand
 import es.skepz.hydrogen.commands.economy.BalanceCommand
 import es.skepz.hydrogen.commands.economy.PayCommand
-import es.skepz.hydrogen.commands.`fun`.FlyCommand
-import es.skepz.hydrogen.commands.`fun`.HatCommand
 import es.skepz.hydrogen.commands.admin.RepairCommand
+import es.skepz.hydrogen.commands.economy.DepositCommand
+import es.skepz.hydrogen.commands.economy.WithdrawCommand
+import es.skepz.hydrogen.commands.`fun`.*
 import es.skepz.hydrogen.commands.tpa.*
 import es.skepz.hydrogen.commands.vanilla.DeopCommand
 import es.skepz.hydrogen.commands.vanilla.EnchantCommand
@@ -23,15 +24,11 @@ import es.skepz.hydrogen.utils.reloadLogout
 import es.skepz.hydrogen.verification.commands.UnverifyCommand
 import es.skepz.hydrogen.verification.commands.VerifyCommand
 import es.skepz.hydrogen.verification.events.VerificationEvents
+import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
-
-/*
-    * TODO
-    *  - lastLogoff is showing december 31st 1969
- */
 
 class Hydrogen : JavaPlugin() {
 
@@ -40,6 +37,8 @@ class Hydrogen : JavaPlugin() {
 
     val tpaRequests = HashMap<UUID, UUID>()
     val tpahereRequests = HashMap<UUID, UUID>()
+
+    val backLocations = HashMap<UUID, Location>()
 
     val confirmMap = HashMap<UUID, (confirm: Boolean) -> Unit>()
 
@@ -87,6 +86,7 @@ class Hydrogen : JavaPlugin() {
         EventPlayerQuit(this).register()
         EventPlayerChat(this).register()
         EventPlayerDie(this).register()
+        EventPlayerTeleport(this).register()
 
         VerificationEvents(this).register()
     }
@@ -101,10 +101,14 @@ class Hydrogen : JavaPlugin() {
 
         BalanceCommand(this).register()
         PayCommand(this).register()
+        WithdrawCommand(this).register()
+        DepositCommand(this).register()
 
         HomeCommand(this).register()
         SetHomeCommand(this).register()
         DelHomeCommand(this).register()
+
+        BackCommand(this).register()
     }
 
     private fun registerVanillaCommands() {
@@ -144,6 +148,10 @@ class Hydrogen : JavaPlugin() {
     private fun registerFunCommands() {
         FlyCommand(this).register()
         HatCommand(this).register()
+        GodCommand(this).register()
+        SmiteCommand(this).register()
+        FeedCommand(this).register()
+        HealCommand(this).register()
     }
 
     private fun registerTpaCommands() {

@@ -13,7 +13,9 @@ class BalanceCommand(val core: Hydrogen) : CoreCMD(core, "balance", "/balance",
         val player = getPlayer()!!
         val file = getUserFile(core, player)
 
-        sendMessage(sender, "&7Your balance is $&b${file.getBal()}&7.")
+        val moneySymbol = core.files.getMoneySymbol()
+
+        sendMessage(sender, "&7Your balance is &3$moneySymbol&b${file.getBal()}&7.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

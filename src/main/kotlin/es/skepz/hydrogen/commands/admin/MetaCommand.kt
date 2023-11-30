@@ -134,7 +134,7 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                 }
                 val data = args.joinToString(" ")
                 val list = mutableListOf<Component>()
-                val lore = data.split("&n")
+                val lore = data.split("\\n")
                 for (line in lore) {
                     list.add(Component.text(colorize(line)))
                 }

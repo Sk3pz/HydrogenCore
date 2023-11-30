@@ -13,6 +13,10 @@ class EventPlayerDie(val core: Hydrogen) : CoreEvent(core) {
         if (event.player.bedSpawnLocation == null) {
             event.player.teleport(getSpawn(core))
         }
+
+        if (core.files.config.cfg.getBoolean("back-command-includes-death-location")) {
+            core.backLocations[event.player.uniqueId] = event.player.location
+        }
     }
 
 }

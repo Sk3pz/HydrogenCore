@@ -18,6 +18,8 @@ commands:
     description: set a home
   delhome:
     description: delete a home
+  back:
+    description: teleport to your last location
 
   tpa:
     description: request to teleport to a player
@@ -40,6 +42,10 @@ commands:
     aliases: bal
   pay:
     description: pay a player
+  deposit:
+    description: deposit diamonds into your bank account
+  withdraw:
+    description: withdraw diamonds from your bank account
 
   cfgreload:
     description: reload the config
@@ -100,6 +106,14 @@ commands:
     description: toggle flight
   hat:
     description: wear the item in your hand as a hat
+  god:
+    description: toggle god mode
+  smite:
+    description: smite a player
+  feed:
+    description: feed a player
+  heal:
+    description: heal a player
 
   core_confirm:
     description: confirm a command

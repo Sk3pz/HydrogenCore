@@ -7,6 +7,8 @@ import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
+import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
 class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome <&7name&c>",
@@ -37,7 +39,18 @@ class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome 
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {
-        return ArrayList()
+        val completions = ArrayList<String>()
+
+        if (sender !is Player) return completions
+
+        val player = sender
+        val file = getUserFile(core, player)
+
+        val homes = file.getHomes()
+        if (args.size == 1) {
+            StringUtil.copyPartialMatches(args[0], homes, completions)
+        }
+        return completions
     }
 
 }
