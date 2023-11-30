@@ -11,6 +11,7 @@ import es.skepz.hydrogen.commands.`fun`.FlyCommand
 import es.skepz.hydrogen.commands.`fun`.HatCommand
 import es.skepz.hydrogen.commands.admin.RepairCommand
 import es.skepz.hydrogen.commands.tpa.*
+import es.skepz.hydrogen.commands.vanilla.DeopCommand
 import es.skepz.hydrogen.commands.vanilla.EnchantCommand
 import es.skepz.hydrogen.commands.vanilla.GamemodeCommand
 import es.skepz.hydrogen.commands.vanilla.OpCommand
@@ -109,6 +110,7 @@ class Hydrogen : JavaPlugin() {
     private fun registerVanillaCommands() {
         EnchantCommand(this).register()
         OpCommand(this).register()
+        DeopCommand(this).register()
         GamemodeCommand(this).register()
     }
 

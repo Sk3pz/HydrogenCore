@@ -9,7 +9,7 @@ class SudoCommand(val core: Hydrogen) : CoreCMD(core, "sudo", "/sudo <command>",
 
     override fun run() {
         val command = args.joinToString(" ")
-        core.server.dispatchCommand(sender, command)
+        core.server.dispatchCommand(core.server.consoleSender, command)
         sendMessage(sender, "&7Command &b$command &7executed as console!")
     }
 

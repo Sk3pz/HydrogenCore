@@ -84,6 +84,8 @@ commands:
 
   op:
     description: manage operator status of a player
+  deop:
+    description: remove operator status of a player
   gamemode:
     description: change your gamemode
     aliases: gm
