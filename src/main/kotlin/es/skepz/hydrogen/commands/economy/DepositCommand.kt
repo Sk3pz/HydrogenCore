@@ -67,11 +67,9 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
 
         for (item in player.inventory.storageContents) {
             if (item == null) continue
-            if (item.type == Material.DIAMOND
-                && item.itemMeta.persistentDataContainer.has(core.diamondKey, PersistentDataType.INTEGER))
+            if (item.type == Material.DIAMOND)
                 foundDiamonds += item.amount
-            if (item.type == Material.DIAMOND_BLOCK
-                && item.itemMeta.persistentDataContainer.has(core.diamondKey, PersistentDataType.INTEGER))
+            if (item.type == Material.DIAMOND_BLOCK)
                 foundBlocks += item.amount
         }
 
