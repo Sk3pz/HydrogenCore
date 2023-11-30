@@ -6,14 +6,56 @@ import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.StringUtil
 
 class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit <&7amount&c|&7all&c>",
     1, "none", true, true) {
 
+    fun removeBlocks(player: Player, amt: Int): Int {
+        var amount = amt
+        var removed = 0
+        for (slot in player.inventory.storageContents) {
+            if (slot == null || slot.type == Material.AIR) continue
+            if (slot.type == Material.DIAMOND_BLOCK) {
+                if (slot.amount > amount) {
+                    slot.amount -= amount
+                    removed += amount
+                    break
+                } else {
+                    amount -= slot.amount
+                    removed += slot.amount
+                    slot.amount = 0
+                }
+            }
+        }
+        return removed
+    }
+
+    fun removeDiamonds(player: Player, amt: Int): Int {
+        var amount = amt
+        var removed = 0
+        for (slot in player.inventory.storageContents) {
+            if (slot == null || slot.type == Material.AIR) continue
+            if (slot.type == Material.DIAMOND) {
+                if (slot.amount > amount) {
+                    slot.amount -= amount
+                    removed += amount
+                    break
+                } else {
+                    amount -= slot.amount
+                    removed += slot.amount
+                    slot.amount = 0
+                }
+            }
+        }
+        return removed
+    }
+
     override fun run() {
-        if (core.files.config.cfg.getBoolean("economy.money-is-diamonds"))
+        if (!core.files.config.cfg.getBoolean("economy.money-is-diamonds"))
             return sendMessage(sender, "&cThis command is not enabled! (The economy is not based on diamonds)")
 
         val player = getPlayer()!!
@@ -25,8 +67,12 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
 
         for (item in player.inventory.storageContents) {
             if (item == null) continue
-            if (item.type == Material.DIAMOND) foundDiamonds += item.amount
-            if (item.type == Material.DIAMOND_BLOCK) foundBlocks += item.amount
+            if (item.type == Material.DIAMOND
+                && item.itemMeta.persistentDataContainer.has(core.diamondKey, PersistentDataType.INTEGER))
+                foundDiamonds += item.amount
+            if (item.type == Material.DIAMOND_BLOCK
+                && item.itemMeta.persistentDataContainer.has(core.diamondKey, PersistentDataType.INTEGER))
+                foundBlocks += item.amount
         }
 
         val file = getUserFile(core, player)
@@ -36,8 +82,8 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
 
             if (total == 0) return sendMessage(sender, "&cYou don't have any diamonds or diamond blocks!")
 
-            player.inventory.remove(ItemStack(Material.DIAMOND_BLOCK, foundBlocks))
-            player.inventory.remove(ItemStack(Material.DIAMOND_BLOCK, foundBlocks))
+            removeBlocks(player, foundBlocks)
+            removeDiamonds(player, foundDiamonds)
 
             file.addToBal(total)
             sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7!")
@@ -51,16 +97,16 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
         val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount!")
         val type = args[1]
         when (type) {
-            "blocks" -> {
+            "blocks", "b", "block" -> {
                 if (foundBlocks < amount) return sendMessage(sender, "&cYou don't have enough diamond blocks!")
-                player.inventory.remove(ItemStack(Material.DIAMOND_BLOCK, amount))
+                removeBlocks(player, amount)
                 val total = amount * 9
                 file.addToBal(total)
                 sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7!")
             }
-            "diamonds" -> {
+            "diamonds", "d", "diamond" -> {
                 if (foundDiamonds < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
-                player.inventory.remove(ItemStack(Material.DIAMOND, amount))
+                removeDiamonds(player, amount)
                 file.addToBal(amount)
                 sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7!")
             }

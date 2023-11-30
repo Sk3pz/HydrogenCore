@@ -73,7 +73,7 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
             Component.text(colorize("&eCertified Shiny!"))))
         bmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
         blockItem.itemMeta = bmeta
-        val diamondItem = ItemStack(Material.DIAMOND_BLOCK, diamondsToAdd)
+        val diamondItem = ItemStack(Material.DIAMOND, diamondsToAdd)
         val dmeta = diamondItem.itemMeta
         dmeta.displayName(Component.text(colorize("&bDiamonds")))
         dmeta.lore(listOf(Component.text(colorize("&7Backed by the &b&lHydrogen &7economy!")),
@@ -89,7 +89,7 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
     }
 
     override fun run() {
-        if (core.files.config.cfg.getBoolean("economy.money-is-diamonds"))
+        if (!core.files.config.cfg.getBoolean("economy.money-is-diamonds"))
             return sendMessage(sender, "&cThis command is not enabled! (The economy is not based on diamonds)")
 
         val player = getPlayer()!!
@@ -131,7 +131,7 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
         val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount!")
         val type = args[1]
         when (type) {
-            "blocks" -> {
+            "blocks", "b", "block" -> {
                 val total = amount * 9
                 if (total > bal) return sendMessage(sender, "&cYou don't have enough money!")
                 file.setBal(bal - total)
@@ -144,7 +144,7 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
 
                 sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b${total - (unaddedBlocks * 9)}&7!")
             }
-            "diamonds" -> {
+            "diamonds", "d", "diamond" -> {
                 if (amount > bal) return sendMessage(sender, "&cYou don't have enough money!")
                 file.setBal(bal - amount)
                 val (_, unaddedDiamonds) = addDiamonds(player, 0, amount)
