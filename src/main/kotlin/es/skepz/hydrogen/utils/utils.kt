@@ -1,6 +1,7 @@
 package es.skepz.hydrogen.utils
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.IMessage
 import es.skepz.hydrogen.skepzlib.playSound
 import es.skepz.hydrogen.skepzlib.wrappers.CFGFile
@@ -22,14 +23,15 @@ fun sendConfirmMsg(core: Hydrogen, player: Player, msg: String, callback: (confi
     core.confirmMap[player.uniqueId] = callback
 }
 
-fun getOfflineUserFileRaw(core: Hydrogen, uuid: UUID): CFGFile? {
+fun getOfflineUserFileRaw(core: Hydrogen, uuid: UUID): UserFile? {
     // check if the user file exists in core.dataFolder.toString() + "/users/"
     val file = java.io.File(core.dataFolder.toString() + "/users/$uuid.yml")
     if (!file.exists()) {
         return null
     }
 
-    return CFGFile(core, uuid.toString(), "users")
+    val raw = CFGFile(core, uuid.toString(), "users")
+    return UserFile(core, uuid, raw)
 }
 
 fun forceGetUserFile(core: Hydrogen, uuid: UUID): CFGFile {

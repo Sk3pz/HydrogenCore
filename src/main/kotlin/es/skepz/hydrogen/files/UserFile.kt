@@ -4,19 +4,24 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.wrappers.CFGFile
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.log
 
 class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString(), "users") {
 
     constructor(plugin: Hydrogen, player: Player) : this(plugin, player.uniqueId)
+    constructor(plugin: Hydrogen, player: OfflinePlayer, raw: CFGFile) : this(plugin, player.uniqueId) { cfg = raw.cfg }
+    constructor(plugin: Hydrogen, player: UUID, raw: CFGFile) : this(plugin, player) { cfg = raw.cfg }
 
     init {
         default("name", Bukkit.getOfflinePlayer(player).name)
         default("rank", "default")
         default("balance", 100L)
         default("op", false)
+        default("verified", false)
 
         default("punishments.amount-of.mutes", 0)
         default("punishments.amount-of.kicks", 0)
@@ -46,6 +51,19 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
 
     fun setRank(rank: String) {
         set("rank", rank)
+    }
+
+    fun setOp(boolean: Boolean) {
+        set("op", boolean)
+    }
+
+    fun isVerified(): Boolean {
+        reload()
+        return cfg.getBoolean("verified")
+    }
+
+    fun setVerified(boolean: Boolean) {
+        set("verified", boolean)
     }
 
     fun getPerms(): List<String> {
@@ -121,9 +139,14 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
     }
     fun lastLogoff(): Date {
         reload()
+        val logoff = cfg.getLong("last-logoff")
+        if (logoff == -1L) {
+            return Date(firstJoin().time)
+        }
         return Date(cfg.getLong("last-logoff"))
     }
     fun setLastLogoff() {
+        // TODO: ???
         set("time.last-logoff", Date().time)
     }
 

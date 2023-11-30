@@ -26,14 +26,14 @@ class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "/unmute <name
         // get the target's file
         val file = UserFile(core, targetPlayer.uniqueId)
 
-        // set the player's ban status to true
-        file.setUnmuted()
-
         // check if the player is muted
         if (!file.isMuted()) {
             sendMessage(sender, "&c$target is not muted!")
             return
         }
+
+        // set the player's ban status to true
+        file.setUnmuted()
 
         sendMessage(sender, "&7You have unmuted &b$target.")
         if (targetPlayer is Player) {

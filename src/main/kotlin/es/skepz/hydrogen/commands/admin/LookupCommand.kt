@@ -4,23 +4,24 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
+import es.skepz.hydrogen.utils.getOfflineUserFileRaw
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
 class LookupCommand(val core: Hydrogen) : CoreCMD(core, "lookup", "&c/lookup <&7player&c>",
-    1, "hydrogen.command.lookup", true, true) {
+    1, "hydrogen.command.lookup", false, true) {
 
     override fun run() {
         // if the player is online, get the player otherwise attempt to get offline player
-        val player = Bukkit.getPlayer(args[0]) ?: Bukkit.getOfflinePlayer(args[0])
-        if (!player.hasPlayedBefore()) {
-            sendMessage(sender, "&cThat player has never played before!")
-            return
-        }
+        val player = core.server.getPlayer(args[0]) ?: core.server.getOfflinePlayer(args[0])
+
+        // get the target's user file if it exists
+        val rfile = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "&cThat player does not exist or has not played before!")
+        val file = UserFile(core, player, rfile)
 
         // get the user's file and information
-        val file = UserFile(core, player.uniqueId)
         val name = player.name ?: "Unknown"
         val uuid = player.uniqueId.toString()
         val firstJoined = file.firstJoin()

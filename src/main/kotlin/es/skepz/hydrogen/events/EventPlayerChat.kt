@@ -6,6 +6,7 @@ import es.skepz.hydrogen.skepzlib.colorize
 import es.skepz.hydrogen.skepzlib.invalid
 import es.skepz.hydrogen.skepzlib.serverBroadcast
 import es.skepz.hydrogen.skepzlib.wrappers.CoreEvent
+import es.skepz.hydrogen.utils.checkVerification
 import es.skepz.hydrogen.utils.getUserFile
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
@@ -43,6 +44,16 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
             return
         }
 
+        val verificationPrefix = if (core.files.config.cfg.getBoolean("verification.enabled")) {
+            if (checkVerification(core, player)) {
+                core.files.config.cfg.getString("verification.prefix") ?: "&a&l✔"
+            } else {
+                core.files.config.cfg.getString("verification.unverified-prefix") ?: ""
+            }
+        } else {
+            ""
+        }
+
         val rank = file.getRank()
         val rankPrefix = core.files.ranks.cfg.getString("ranks.$rank.prefix") ?: ""
         val nameColor = core.files.ranks.cfg.getString("ranks.$rank.nameColor") ?: "&8"
@@ -68,7 +79,7 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
             "$rankPrefix $nameColor"
         }
 
-        serverBroadcast("$prefix${player.name} &7> $chatColor${colorize(msgPlain)}")
+        serverBroadcast("$verificationPrefix$prefix${player.name} &7> $chatColor${colorize(msgPlain)}")
     }
 
 }

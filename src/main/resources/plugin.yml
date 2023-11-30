@@ -100,3 +100,8 @@ commands:
   core_cancel:
     description: cancel a command
     visible: false
+
+  verify:
+    description: verify a user
+  unverify:
+    description: unverify a user

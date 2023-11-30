@@ -1,9 +1,11 @@
 package es.skepz.hydrogen.commands.admin
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.checkPermission
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
+import es.skepz.hydrogen.utils.getOfflineUserFileRaw
 import es.skepz.hydrogen.utils.getUserFile
 import es.skepz.hydrogen.utils.refreshPermissions
 import org.bukkit.command.CommandSender
@@ -39,11 +41,10 @@ class RankCommand(val core: Hydrogen) : CoreCMD(core, "rank", "/rank <create|edi
                     sendMessage(sender, "&cInvalid usage. /rank set <player> <rank>")
                     return
                 }
-                val player = core.server.getPlayer(args[1])
-                if (player == null) {
-                    sendMessage(sender, "&cPlayer not found.")
-                    return
-                }
+                val player = core.server.getPlayer(args[1]) ?: core.server.getOfflinePlayer(args[1])
+                // get the target's user file if it exists
+                val rfile = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "&cThat player does not exist or has not played before!")
+                val file = UserFile(core, player, rfile)
 
                 if (sender is Player && player == sender && !checkPermission(sender, "hydrogen.command.rank.self")) {
                     sendMessage(sender, "&cYou can't set your own rank.")
@@ -56,13 +57,14 @@ class RankCommand(val core: Hydrogen) : CoreCMD(core, "rank", "/rank <create|edi
                     return
                 }
 
-                val file = getUserFile(core, player)
-
                 file.setRank(rank)
-                refreshPermissions(core, player)
                 sendMessage(sender, "&7Rank set.")
-                // send a message to the player
-                sendMessage(player, "&7Your rank has been set to &b$rank")
+
+                if (player is Player) {
+                    refreshPermissions(core, player)
+                    // send a message to the player
+                    sendMessage(player, "&7Your rank has been set to &b$rank")
+                }
             }
             "edit" -> {
                 // edit <rank> <prefix|nameColor|permissions> <value>

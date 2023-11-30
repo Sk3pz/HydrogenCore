@@ -19,6 +19,9 @@ import es.skepz.hydrogen.files.ServerFiles
 import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.utils.reloadLogin
 import es.skepz.hydrogen.utils.reloadLogout
+import es.skepz.hydrogen.verification.commands.UnverifyCommand
+import es.skepz.hydrogen.verification.commands.VerifyCommand
+import es.skepz.hydrogen.verification.events.VerificationEvents
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.plugin.java.JavaPlugin
@@ -26,7 +29,6 @@ import java.util.*
 
 /*
     * TODO
-    *  - muting is currently broken
     *  - lastLogoff is showing december 31st 1969
  */
 
@@ -84,6 +86,8 @@ class Hydrogen : JavaPlugin() {
         EventPlayerQuit(this).register()
         EventPlayerChat(this).register()
         EventPlayerDie(this).register()
+
+        VerificationEvents(this).register()
     }
 
     private fun registerCommands() {
@@ -128,6 +132,9 @@ class Hydrogen : JavaPlugin() {
         PermissionCommand(this).register()
         LookupCommand(this).register()
         RepairCommand(this).register()
+
+        VerifyCommand(this).register()
+        UnverifyCommand(this).register()
     }
 
     private fun registerFunCommands() {

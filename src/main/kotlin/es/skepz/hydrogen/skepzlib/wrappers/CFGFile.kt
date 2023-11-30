@@ -13,7 +13,6 @@ import java.io.File
 open class CFGFile(val plugin: JavaPlugin, private val fileName: String, folder: String) {
 
     var cfg: FileConfiguration
-        private set
 
     private val file: File
     private val dataFolder: File

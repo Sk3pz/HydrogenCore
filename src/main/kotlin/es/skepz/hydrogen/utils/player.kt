@@ -89,3 +89,8 @@ fun reloadLogout(plugin: Hydrogen, player: Player) {
     plugin.tpahereRequests.remove(player.uniqueId)
     plugin.confirmMap.remove(player.uniqueId)
 }
+
+fun checkVerification(core: Hydrogen, player: Player): Boolean {
+    val file = getUserFile(core, player)
+    return file.isVerified()
+}
