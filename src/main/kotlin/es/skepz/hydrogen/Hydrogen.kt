@@ -135,6 +135,7 @@ class Hydrogen : JavaPlugin() {
         PermissionCommand(this).register()
         LookupCommand(this).register()
         RepairCommand(this).register()
+        BroadcastCommand(this).register()
 
         VerifyCommand(this).register()
         UnverifyCommand(this).register()

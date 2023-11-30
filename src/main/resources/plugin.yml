@@ -66,6 +66,9 @@ commands:
     aliases: perm
   repair:
     description: repair the item in your hand
+  broadcast:
+    description: broadcast a message
+    aliases: bc
 
   ban:
     description: ban a player

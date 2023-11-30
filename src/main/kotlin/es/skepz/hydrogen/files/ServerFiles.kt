@@ -34,6 +34,7 @@ class ServerFiles(private val plugin: Hydrogen) {
         reload()
 
         config.default("custom-chat", true)
+        config.default("starting-balance", 100)
 
         // verification
         config.default("verification.enabled", false)

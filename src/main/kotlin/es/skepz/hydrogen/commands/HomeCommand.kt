@@ -24,7 +24,7 @@ class HomeCommand(val core: Hydrogen) : CoreCMD(core, "home", "&c/home <&7name&c
                 sendMessage(sender, "&cYou do not have any homes set!")
                 return;
             }
-            var homelist = "&7Homes: "
+            var homelist = "&7Homes (${homes.size}): "
             for (x in homes.indices) {
                 val h = homes[x]
                 homelist = homelist.plus("&b$h")

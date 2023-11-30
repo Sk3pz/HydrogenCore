@@ -19,7 +19,7 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
     init {
         default("name", Bukkit.getOfflinePlayer(player).name)
         default("rank", "default")
-        default("balance", 100L)
+        default("balance", plugin.files.config.cfg.getInt("starting-balance"))
         default("op", false)
         default("verified", false)
 
