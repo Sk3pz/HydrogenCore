@@ -1,6 +1,7 @@
 package es.skepz.hydrogen.files
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CFGFile
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -146,7 +147,6 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
         return Date(cfg.getLong("last-logoff"))
     }
     fun setLastLogoff() {
-        // TODO: ???
         set("time.last-logoff", Date().time)
     }
 
@@ -199,6 +199,7 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
         reload()
         if (shouldUnban()) {
             setUnbanned()
+            sendMessage(Bukkit.getConsoleSender(), "&cUNBANNED") // ----------------------- DEBUG
             return false
         }
         return cfg.getBoolean("punishments.banned.enabled")
@@ -221,7 +222,7 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
     }
     fun banTimeRemaining(): Long {
         reload()
-        if (!cfg.getBoolean("punishments.banned.enabled")) return -1L
+        //if (!cfg.getBoolean("punishments.banned.enabled")) return -1L
         return banStart() + banTime()
     }
     fun shouldUnban(): Boolean {

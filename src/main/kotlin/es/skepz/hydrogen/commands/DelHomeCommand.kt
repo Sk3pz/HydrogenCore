@@ -1,10 +1,10 @@
 package es.skepz.hydrogen.commands
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.playSound
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -25,7 +25,7 @@ class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome 
             }
         }
 
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         // check if the home exists
         if (!file.homeExists(name)) {
@@ -44,7 +44,7 @@ class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome 
         if (sender !is Player) return completions
 
         val player = sender
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         val homes = file.getHomes()
         if (args.size == 1) {

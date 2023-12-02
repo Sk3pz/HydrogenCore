@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "/unmute <name>", 1,
+class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "&c/unmute <&7name&c>", 1,
     "hydrogen.command.unmute", false, true) {
 
     override fun run() {

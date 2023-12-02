@@ -1,9 +1,7 @@
 package es.skepz.hydrogen.utils
 
-import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.Hydrogen
 import org.bukkit.Location
-import org.bukkit.entity.Player
 import java.util.*
 
 fun setWarp(plugin: Hydrogen, name: String, loc: Location) {
@@ -13,6 +11,21 @@ fun setWarp(plugin: Hydrogen, name: String, loc: Location) {
     plugin.files.warps["warps.$name.z"] = loc.z
     plugin.files.warps["warps.$name.pitch"] = loc.pitch
     plugin.files.warps["warps.$name.yaw"] = loc.yaw
+}
+
+fun setWarp(plugin: Hydrogen, name: String, loc: Location, permission: String?) {
+    plugin.files.warps["warps.$name.world"] = loc.world.uid.toString()
+    plugin.files.warps["warps.$name.x"] = loc.x
+    plugin.files.warps["warps.$name.y"] = loc.y
+    plugin.files.warps["warps.$name.z"] = loc.z
+    plugin.files.warps["warps.$name.pitch"] = loc.pitch
+    plugin.files.warps["warps.$name.yaw"] = loc.yaw
+    plugin.files.warps["warps.$name.permission"] = permission
+}
+
+fun getWarpPermission(plugin: Hydrogen, name: String): String? {
+    val perm = plugin.files.warps.cfg.getString("warps.$name.permission")
+    return perm
 }
 
 fun getWarp(plugin: Hydrogen, name: String): Location? {
@@ -60,11 +73,4 @@ fun setSpawn(plugin: Hydrogen, loc: Location) {
     data["spawn.z"] = loc.z
     data["spawn.pitch"] = loc.pitch
     data["spawn.yaw"] = loc.yaw
-}
-
-fun getUserFile(core: Hydrogen, player: Player): UserFile {
-    if (core.userFiles.contains(player.uniqueId)) return core.userFiles[player.uniqueId]!!
-    val file = UserFile(core, player)
-    core.userFiles[player.uniqueId] = file
-    return file
 }

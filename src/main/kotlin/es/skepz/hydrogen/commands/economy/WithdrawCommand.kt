@@ -1,17 +1,11 @@
 package es.skepz.hydrogen.commands.economy
 
 import es.skepz.hydrogen.Hydrogen
-import es.skepz.hydrogen.skepzlib.colorize
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.addDiamonds
-import es.skepz.hydrogen.utils.getUserFile
-import net.kyori.adventure.text.Component
-import org.bukkit.Material
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.StringUtil
 
 class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdraw <&7amount&c|&7all&c>",
@@ -27,7 +21,7 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
 
         val moneySymbol = core.files.getMoneySymbol()
 
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         val bal = file.getBal()
 

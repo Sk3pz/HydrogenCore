@@ -5,7 +5,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class CancelCommand(val core: Hydrogen) : CoreCMD(core, "core_cancel", "/core_cancel",
+class CancelCommand(val core: Hydrogen) : CoreCMD(core, "core_cancel", "&c/core_cancel",
     0, "none", true, false) {
 
     override fun run() {

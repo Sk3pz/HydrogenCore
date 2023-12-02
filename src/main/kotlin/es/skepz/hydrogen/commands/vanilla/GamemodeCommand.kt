@@ -9,7 +9,7 @@ import org.bukkit.GameMode
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "/gamemode <&7gm&c> <&fplayer?&c>", 1,
+class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "&c/gamemode <&7gm&c> <&7player?&c>", 1,
     "hydrogen.command.fly", false, true) {
 
     override fun run() {

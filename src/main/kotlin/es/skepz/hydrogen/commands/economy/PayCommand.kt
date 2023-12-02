@@ -1,14 +1,14 @@
 package es.skepz.hydrogen.commands.economy
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "/pay <player> <amount>",
+class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "&c/pay <&7player&c> <&7amount&c>",
     2, "none", true, true) {
 
     override fun run() {
@@ -29,10 +29,10 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "/pay <player> <amou
         }
 
         // get the player's user file
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         // get the target's user file
-        val targetFile = getUserFile(core, targetPlayer)
+        val targetFile = UserFile(core, targetPlayer)
 
         val balance = file.getBal()
 

@@ -23,9 +23,8 @@ commands:
 
   tpa:
     description: request to teleport to a player
-  tphere:
+  tpahere:
     description: request to teleport a player to you
-    aliases: tpahere
   tpaccept:
     description: accept a request for teleportation
   tpdeny:

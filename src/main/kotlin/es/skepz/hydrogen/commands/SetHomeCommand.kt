@@ -1,13 +1,11 @@
 package es.skepz.hydrogen.commands
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.playSound
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
-import es.skepz.hydrogen.utils.getUserFile
 import es.skepz.hydrogen.utils.sendConfirmMsg
-import es.skepz.hydrogen.utils.setWarp
-import es.skepz.hydrogen.utils.warpExists
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
@@ -27,7 +25,7 @@ class SetHomeCommand(val core: Hydrogen) : CoreCMD(core, "sethome", "&c/sethome 
             }
         }
 
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         // check if the home exists and if the user wants to overwrite it
         if (file.homeExists(name)) {

@@ -5,14 +5,13 @@ import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
-import es.skepz.hydrogen.utils.getUserFile
 import es.skepz.hydrogen.utils.refreshPermissions
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class PermissionCommand(val core: Hydrogen) : CoreCMD(core, "permission", "/permission <&7add&c|&7remove&c|&7list&c> <&7player&c>",
+class PermissionCommand(val core: Hydrogen) : CoreCMD(core, "permission", "&c/permission <&7add&c|&7remove&c|&7list&c> <&7player&c>",
     2, "hydrogen.command.permission", false, true) {
 
     override fun run() {

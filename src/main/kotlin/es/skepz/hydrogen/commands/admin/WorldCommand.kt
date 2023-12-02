@@ -9,7 +9,7 @@ import org.bukkit.WorldCreator
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "/world <create|delete|tp|list>", 1,
+class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7create&c|&7delete&c|&7tp&c|&7list&c>", 1,
     "hydrogen.command.world", true, true) {
 
     override fun run() {
@@ -96,6 +96,10 @@ class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "/world <create|d
             }
             "list" -> {
                 val worlds = core.server.worlds
+                if (worlds.isEmpty()) {
+                    sendMessage(player, "&cThere are no worlds to list.")
+                    return
+                }
                 val worldNames = worlds.joinToString("&7, &b") { it.name }
                 sendMessage(player, "&7Worlds: &b$worldNames&7.")
             }

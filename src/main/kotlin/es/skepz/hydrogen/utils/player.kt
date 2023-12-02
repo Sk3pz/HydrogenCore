@@ -53,7 +53,7 @@ fun login(plugin: Hydrogen, player: Player, event: PlayerLoginEvent): Boolean {
     // ban check
     if (file.isBanned()) {
         event.kickMessage(Component.text(colorize("&cYou are banned from this server!\n" +
-                "&cReason: &4${file.banReason()}\n" +
+                "&cReason: &f${file.banReason()}\n" +
                 (if (file.banSender() == "none") "" else "&cBanned by: &f${file.banSender()}\n") +
                 (if (file.banTime() == -1L) "&cThis ban is permanent." else "&cBanned until: &f${file.bannedUntil()}"))))
         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, event.kickMessage())
@@ -83,24 +83,20 @@ fun reloadLogin(plugin: Hydrogen, player: Player) {
 }
 
 fun logout(plugin: Hydrogen, player: Player) {
-    if (plugin.userFiles.containsKey(player.uniqueId)) {
-        val file = plugin.userFiles[player.uniqueId]!!
-        file.setLastLogoff()
-    }
-    plugin.userFiles.remove(player.uniqueId)
+    val file = UserFile(plugin, player)
+    file.setLastLogoff()
     plugin.tpaRequests.remove(player.uniqueId)
     plugin.tpahereRequests.remove(player.uniqueId)
     plugin.confirmMap.remove(player.uniqueId)
 }
 
 fun reloadLogout(plugin: Hydrogen, player: Player) {
-    plugin.userFiles.remove(player.uniqueId)
     plugin.tpaRequests.remove(player.uniqueId)
     plugin.tpahereRequests.remove(player.uniqueId)
     plugin.confirmMap.remove(player.uniqueId)
 }
 
 fun checkVerification(core: Hydrogen, player: Player): Boolean {
-    val file = getUserFile(core, player)
+    val file = UserFile(core, player)
     return file.isVerified() || checkPermission(player, "hydrogen.verification.bypass")
 }

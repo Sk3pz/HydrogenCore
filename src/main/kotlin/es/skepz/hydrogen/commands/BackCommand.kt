@@ -6,7 +6,8 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.Sound
 
-class BackCommand(val core: Hydrogen) : CoreCMD(core, "back", "&c/back", 0, "hydrogen.command.back", true, false) {
+class BackCommand(val core: Hydrogen) : CoreCMD(core, "back", "&c/back",
+    0, "hydrogen.command.back", true, false) {
 
         override fun run() {
             val player = getPlayer()!!

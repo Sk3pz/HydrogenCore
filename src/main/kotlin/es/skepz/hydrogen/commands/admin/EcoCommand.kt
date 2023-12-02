@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "/eco <give|take|set|check> <player> <amount>",
+class EcoCommand(val core: Hydrogen) : CoreCMD(core, "eco", "&c/eco <&7give&c|&7take&c|&7set&c|&7check&c> <&7player&c> <&7amount&c>",
     2, "hydrogen.command.eco", false, true) {
 
     override fun run() {

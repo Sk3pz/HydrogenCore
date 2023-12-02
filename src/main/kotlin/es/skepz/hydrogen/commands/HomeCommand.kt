@@ -1,10 +1,10 @@
 package es.skepz.hydrogen.commands
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.playSound
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -16,7 +16,7 @@ class HomeCommand(val core: Hydrogen) : CoreCMD(core, "home", "&c/home <&7name&c
 
     override fun run() {
         val player = getPlayer()!!
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         if (args.size == 0) {
             val homes = file.getHomes()
@@ -63,7 +63,7 @@ class HomeCommand(val core: Hydrogen) : CoreCMD(core, "home", "&c/home <&7name&c
         if (sender !is Player) return completions
 
         val player = sender
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         val homes = file.getHomes()
         if (args.size == 1) {

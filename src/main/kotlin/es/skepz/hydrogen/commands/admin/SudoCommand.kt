@@ -4,7 +4,7 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 
-class SudoCommand(val core: Hydrogen) : CoreCMD(core, "sudo", "/sudo <command>",
+class SudoCommand(val core: Hydrogen) : CoreCMD(core, "sudo", "&c/sudo <&7command&c>",
     1, "hydrogen.command.sudo", true, false) {
 
     override fun run() {

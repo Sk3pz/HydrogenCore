@@ -10,7 +10,7 @@ import org.bukkit.util.StringUtil
 import java.util.*
 import kotlin.collections.HashMap
 
-class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <player?>",
+class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7player&c?>",
     0, "none", true, true) {
 
     override fun run() {

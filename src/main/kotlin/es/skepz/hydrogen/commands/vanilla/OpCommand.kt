@@ -1,14 +1,14 @@
 package es.skepz.hydrogen.commands.vanilla
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "/op <&7player&c>", 1,
+class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "&c/op <&7player&c>", 1,
     "hydrogen.command.op", false, true) {
 
     override fun run() {
@@ -19,7 +19,7 @@ class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "/op <&7player&c>", 1,
         }
         target.isOp = true
 
-        val file = getUserFile(core, target)
+        val file = UserFile(core, target)
         file.setOp(true)
 
         sendMessage(sender, "&7${target.name} is now a server operator.")

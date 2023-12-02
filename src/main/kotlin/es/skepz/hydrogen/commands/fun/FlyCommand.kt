@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class FlyCommand(val core: Hydrogen) : CoreCMD(core, "fly", "/fly", 0,
+class FlyCommand(val core: Hydrogen) : CoreCMD(core, "fly", "&c/fly", 0,
     "hydrogen.command.fly", false, true) {
 
     override fun run() {

@@ -11,7 +11,8 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute", "/tempmute <name> <time> <seconds|minutes|hours|days|years> <reason?>", 2,
+class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
+    "&c/tempmute <&7name&c> <&7time&c> <&7seconds&c|&7minutes&c|&7hours&c|&7days&c|&7years&c> <&7reason&c?>", 2,
     "hydrogen.command.tempmute", false, true) {
 
     override fun run() {

@@ -1,15 +1,13 @@
 package es.skepz.hydrogen.commands.economy
 
 import es.skepz.hydrogen.Hydrogen
+import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.addDiamonds
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Material
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.StringUtil
 
 class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit <&7amount&c|&7all&c>",
@@ -74,7 +72,7 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
                 foundBlocks += item.amount
         }
 
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
 
         if (args[0] == "all") {
             val total = (foundBlocks * 9) + foundDiamonds

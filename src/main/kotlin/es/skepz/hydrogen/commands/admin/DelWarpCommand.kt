@@ -1,4 +1,4 @@
-package es.skepz.hydrogen.commands
+package es.skepz.hydrogen.commands.admin
 
 import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.playSound

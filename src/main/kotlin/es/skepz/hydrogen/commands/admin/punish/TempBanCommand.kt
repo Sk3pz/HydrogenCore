@@ -13,7 +13,8 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban", "/tempban <name> <time> <seconds|minutes|hours|days|years> <reason?>", 3,
+class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
+    "&c/tempban <&7name&c> <&7time&c> <&7seconds&c|&7minutes&c|&7hours&c|&7days&c|&7years&c> <&7reason&c?>", 3,
     "hydrogen.command.tempban", false, true) {
 
     override fun run() {

@@ -5,7 +5,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class ConfirmCommand(val core: Hydrogen) : CoreCMD(core, "core_confirm", "/core_confirm",
+class ConfirmCommand(val core: Hydrogen) : CoreCMD(core, "core_confirm", "&c/core_confirm",
     0, "none", true, false) {
 
     override fun run() {

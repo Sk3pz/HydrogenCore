@@ -12,17 +12,15 @@ import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
 
-class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "&c/setwarp <&7name&c>",
+class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "&c/setwarp <&7name&c> <&7permission?&c>",
     1, "hydrogen.command.setwarp", true, false) {
-
-    override fun init() {
-        // not used for this function
-    }
 
     override fun run() {
         val player = getPlayer()!!
         val loc = player.location
         val name = args[0]
+
+        val permission = if (args.size > 1) args[1] else null
 
         for (c in name) {
             if (c !in 'A'..'Z' && c !in 'a'..'z' && c !in '0'..'9' && c != '_') {
@@ -38,14 +36,14 @@ class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "&c/setwarp 
                     sendMessage(player, "&cWarp not overwritten!")
                     return@sendConfirmMsg
                 }
-                setWarp(core, name, loc)
+                setWarp(core, name, loc, permission)
                 sendMessage(player, "&7Warp &b$name&7 has been overwritten!")
                 playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
             }
             return
         }
 
-        setWarp(core, name, loc)
+        setWarp(core, name, loc, permission)
         sendMessage(player, "&7New warp set!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }

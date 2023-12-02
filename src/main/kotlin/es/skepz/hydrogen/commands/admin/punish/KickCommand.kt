@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "/kick <name> <reason?>", 1,
+class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "&c/kick <&7name&c> <&7reason&c?>", 1,
     "hydrogen.command.kick", false, true) {
 
     override fun run() {

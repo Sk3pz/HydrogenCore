@@ -1,19 +1,18 @@
 package es.skepz.hydrogen.commands.admin.punish
 
 import es.skepz.hydrogen.Hydrogen
-import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.skepzlib.colorize
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
+import es.skepz.hydrogen.utils.getOfflineUserFileRaw
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
-import java.util.ArrayList
 
-class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "/ban <name> <reason?>", 1,
+class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "&c/ban <&7name&c> <&7reason&c?>", 1,
     "hydrogen.command.ban", false, true) {
 
     override fun run() {
@@ -33,7 +32,8 @@ class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "/ban <name> <reason
         val targetPlayer = core.server.getPlayer(target) ?: core.server.getOfflinePlayer(target)
 
         // get the target's file
-        val file = UserFile(core, targetPlayer.uniqueId)
+        val file = getOfflineUserFileRaw(core, targetPlayer.uniqueId)
+            ?: return sendMessage(sender, "&cThat player has never joined the server!")
 
         // check the player's rank
         val rank = file.getRank()
@@ -61,6 +61,11 @@ class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "/ban <name> <reason
             ))
         }
 
+        targetPlayer.banPlayer("&cYou are banned from this server!\n" +
+                "&cReason: &f$reason\n" +
+                "&cBanned by: &f$senderName\n" +
+                "&cThis ban is permanent.")
+        
         sendMessage(sender, "&7You have banned &b$target &7for &b$reason&7.")
         Bukkit.getLogger().severe("$senderName has banned $target for $reason")
     }

@@ -23,10 +23,10 @@ dependencies {
 
 tasks {
     shadowJar {
-        relocate("org.jetbrains", "es.skepz.magik.libs.org.jetbrains")
-        relocate("org.intellij", "es.skepz.magik.libs.org.intellij")
-        relocate("com.google", "es.skepz.magik.libs.com.google")
-        relocate("com.moandjiezana", "es.skepz.magik.libs.com.moandjiezana")
-        relocate("kotlin", "es.skepz.magik.libs.kotlin")
+        relocate("org.jetbrains", "es.skepz.hydrogen.libs.org.jetbrains")
+        relocate("org.intellij", "es.skepz.hydrogen.libs.org.intellij")
+        relocate("com.google", "es.skepz.hydrogen.libs.com.google")
+        relocate("com.moandjiezana", "es.skepz.hydrogen.libs.com.moandjiezana")
+        relocate("kotlin", "es.skepz.hydrogen.libs.kotlin")
     }
 }

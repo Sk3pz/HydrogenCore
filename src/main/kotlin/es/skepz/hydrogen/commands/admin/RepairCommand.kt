@@ -7,7 +7,8 @@ import org.bukkit.Material
 import org.bukkit.command.CommandSender
 import org.bukkit.inventory.meta.Damageable
 
-class RepairCommand(core: Hydrogen) : CoreCMD(core, "repair", "&c/repair", 0, "hydrogen.command.repair", true, true) {
+class RepairCommand(core: Hydrogen) : CoreCMD(core, "repair", "&c/repair",
+    0, "hydrogen.command.repair", true, true) {
 
     override fun run() {
         val player = getPlayer()!!

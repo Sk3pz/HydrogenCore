@@ -5,7 +5,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class RulesCommand(val core: Hydrogen) : CoreCMD(core, "rules", "/rules", 0,
+class RulesCommand(val core: Hydrogen) : CoreCMD(core, "rules", "&c/rules", 0,
     "none", true, false) {
 
     override fun run() {

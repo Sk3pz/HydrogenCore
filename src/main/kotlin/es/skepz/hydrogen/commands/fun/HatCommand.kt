@@ -4,7 +4,7 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 
-class HatCommand(val core: Hydrogen) : CoreCMD(core, "hat", "/hat", 0,
+class HatCommand(val core: Hydrogen) : CoreCMD(core, "hat", "&c/hat", 0,
     "hydrogen.command.hat", true, false) {
 
     override fun run() {

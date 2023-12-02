@@ -7,9 +7,8 @@ import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
-import java.util.ArrayList
 
-class TphereCommand(val core: Hydrogen) : CoreCMD(core, "tphere", "&c/tphere <player>",
+class TpahereCommand(val core: Hydrogen) : CoreCMD(core, "tpahere", "&c/tpahere <&7player&c>",
     1, "none", true, true) {
 
     override fun run() {

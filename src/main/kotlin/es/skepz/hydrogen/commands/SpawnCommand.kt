@@ -8,7 +8,7 @@ import es.skepz.hydrogen.utils.getSpawn
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 
-class SpawnCommand(val core: Hydrogen) : CoreCMD(core, "spawn", "/spawn", 0,
+class SpawnCommand(val core: Hydrogen) : CoreCMD(core, "spawn", "&c/spawn", 0,
     "none", true, false) {
 
     override fun run() {

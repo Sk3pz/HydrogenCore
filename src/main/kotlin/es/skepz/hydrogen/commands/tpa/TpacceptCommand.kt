@@ -13,7 +13,7 @@ import org.bukkit.util.StringUtil
 import java.util.*
 import kotlin.collections.HashMap
 
-class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpaccept <player?>",
+class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpaccept <&7player&c?>",
     0, "none", true, true) {
 
     fun teleport(target: Player, tpr: Player) {

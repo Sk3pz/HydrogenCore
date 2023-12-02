@@ -18,7 +18,6 @@ import es.skepz.hydrogen.commands.vanilla.GamemodeCommand
 import es.skepz.hydrogen.commands.vanilla.OpCommand
 import es.skepz.hydrogen.events.*
 import es.skepz.hydrogen.files.ServerFiles
-import es.skepz.hydrogen.files.UserFile
 import es.skepz.hydrogen.utils.reloadLogin
 import es.skepz.hydrogen.utils.reloadLogout
 import es.skepz.hydrogen.verification.commands.UnverifyCommand
@@ -31,10 +30,12 @@ import org.bukkit.WorldCreator
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
+// todo: banning doesnt work
+// todo: afk system
+
 class Hydrogen : JavaPlugin() {
 
     val files = ServerFiles(this)
-    val userFiles = mutableMapOf<UUID, UserFile>()
 
     val tpaRequests = HashMap<UUID, UUID>()
     val tpahereRequests = HashMap<UUID, UUID>()
@@ -73,7 +74,6 @@ class Hydrogen : JavaPlugin() {
         // loop through online players and create their user files
         server.onlinePlayers.forEach { player ->
             reloadLogin(this, player)
-            userFiles[player.uniqueId] = UserFile(this, player)
         }
     }
 
@@ -159,7 +159,7 @@ class Hydrogen : JavaPlugin() {
 
     private fun registerTpaCommands() {
         TpaCommand(this).register()
-        TphereCommand(this).register()
+        TpahereCommand(this).register()
         TpaCancel(this).register()
         TpacceptCommand(this).register()
         TpdenyCommand(this).register()

@@ -6,13 +6,12 @@ import es.skepz.hydrogen.skepzlib.checkPermission
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
-import es.skepz.hydrogen.utils.getUserFile
 import es.skepz.hydrogen.utils.refreshPermissions
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class RankCommand(val core: Hydrogen) : CoreCMD(core, "rank", "/rank <create|edit|set|delete|list> <args>",
+class RankCommand(val core: Hydrogen) : CoreCMD(core, "rank", "&c/rank <&7create&c|&7edit&c|&7set&c|&7delete&c|&7list&c> <&7args&c>",
     1, "hydrogen.command.rank", false, true) {
 
     override fun run() {

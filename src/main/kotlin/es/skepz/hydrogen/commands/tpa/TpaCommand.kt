@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "&c/tpa <player>",
+class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "&c/tpa <&7player&c>",
     1, "none", true, true) {
 
     override fun run() {

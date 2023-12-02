@@ -46,6 +46,11 @@ class WarpCommand(val core: Hydrogen) : CoreCMD(core, "warp", "&c/warp <&7name&c
 
         val loc = getWarp(core, warp) ?: return sendMessage(player, "&cWarp not found!")
 
+        val permission = core.files.warps.cfg.getString("warps.$warp.permission")
+        if (permission != null && !checkPermission(player, permission)) {
+            return sendMessage(player, "&cYou don't have permission to warp there!")
+        }
+
         player.teleport(loc)
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
         sendMessage(player, "&7You have been teleported to &b$warp&7!")

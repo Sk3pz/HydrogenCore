@@ -7,7 +7,6 @@ import es.skepz.hydrogen.skepzlib.invalid
 import es.skepz.hydrogen.skepzlib.serverBroadcast
 import es.skepz.hydrogen.skepzlib.wrappers.CoreEvent
 import es.skepz.hydrogen.utils.checkVerification
-import es.skepz.hydrogen.utils.getUserFile
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.event.EventHandler
@@ -35,7 +34,7 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
         }
 
         // mute check
-        val file = getUserFile(core, player)
+        val file = UserFile(core, player)
         if (file.isMuted()) {
             invalid(player, "&c&lCannot send message!", "&cYou are muted in this chat.",
                 "&cReason: &f${file.muteReason()}\n" +

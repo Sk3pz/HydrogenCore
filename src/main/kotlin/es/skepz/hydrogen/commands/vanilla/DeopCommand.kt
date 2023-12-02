@@ -4,13 +4,12 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import es.skepz.hydrogen.utils.getOfflineUserFileRaw
-import es.skepz.hydrogen.utils.getUserFile
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class DeopCommand(val core: Hydrogen) : CoreCMD(core, "deop", "/deop <&7player&c>", 1,
+class DeopCommand(val core: Hydrogen) : CoreCMD(core, "deop", "&c/deop <&7player&c>", 1,
     "hydrogen.command.deop", false, true) {
 
     override fun run() {
