@@ -85,39 +85,31 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
             removeDiamonds(player, foundDiamonds)
 
             file.addToBal(total)
-            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7!")
+            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
             return
         }
 
-        if (args.size != 2) {
-            return sendMessage(sender, "&cInvalid usage! &7/withdraw amount <&7blocks&c|&7diamonds&c>")
-        }
-
         val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount!")
-        val type = args[1]
-        when (type) {
-            "blocks", "b", "block" -> {
-                if (foundBlocks < amount) return sendMessage(sender, "&cYou don't have enough diamond blocks!")
-                removeBlocks(player, amount)
-                val total = amount * 9
-                file.addToBal(total)
-                sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7!")
-            }
-            "diamonds", "d", "diamond" -> {
-                if ((foundDiamonds + (foundBlocks * 9)) < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
-                if (foundDiamonds < amount) {
-                    val blocksToBreakDown = (amount - foundDiamonds) / 9
-                    val remainder = (amount - foundDiamonds) % 9
-                    removeBlocks(player, blocksToBreakDown + if (remainder > 0) 1 else 0)
-                    if (remainder > 0) {
-                        addDiamonds(core, player, 0, 9 - remainder)
-                    }
+        if (args.size == 2 && (args[1] == "blocks" || args[1] == "b" || args[1] == "block")) {
+            if (foundBlocks < amount) return sendMessage(sender, "&cYou don't have enough diamond blocks!")
+            removeBlocks(player, amount)
+            val total = amount * 9
+            file.addToBal(total)
+            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
+        } else {
+            if ((foundDiamonds + (foundBlocks * 9)) < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
+            if (foundDiamonds < amount) {
+                val blocksToBreakDown = (amount - foundDiamonds) / 9
+                val remainder = (amount - foundDiamonds) % 9
+                removeBlocks(player, blocksToBreakDown + if (remainder > 0) 1 else 0)
+                if (remainder > 0) {
+                    addDiamonds(core, player, 0, 9 - remainder)
                 }
-
-                removeDiamonds(player, foundDiamonds)
-                file.addToBal(amount)
-                sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7!")
             }
+
+            removeDiamonds(player, foundDiamonds)
+            file.addToBal(amount)
+            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
         }
     }
 

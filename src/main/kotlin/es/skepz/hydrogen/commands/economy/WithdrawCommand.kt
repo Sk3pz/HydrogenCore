@@ -60,45 +60,37 @@ class WithdrawCommand(val core: Hydrogen) : CoreCMD(core, "withdraw", "&c/withdr
                 file.addToBal(unaddedDiamonds)
             }
 
-            sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b${bal - unaddedDiamonds - (unaddedBlocks * 9)}&7!")
+            sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b${bal - unaddedDiamonds - (unaddedBlocks * 9)}&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
 
             return
         }
 
-        if (args.size != 2) {
-            return sendMessage(sender, "&cInvalid usage! &7/withdraw amount <&7blocks&c|&7diamonds&c>")
-        }
-
         val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount!")
-        val type = args[1]
-        when (type) {
-            "blocks", "b", "block" -> {
-                val total = amount * 9
-                if (total > bal) return sendMessage(sender, "&cYou don't have enough money!")
-                file.setBal(bal - total)
-                val (unaddedBlocks, _) = addDiamonds(core, player, amount, 0)
+        if (args.size == 2 && (args[1] == "blocks" || args[1] == "b" || args[1] == "block")) {
+            val total = amount * 9
+            if (total > bal) return sendMessage(sender, "&cYou don't have enough money!")
+            file.setBal(bal - total)
+            val (unaddedBlocks, _) = addDiamonds(core, player, amount, 0)
 
-                if (unaddedBlocks > 0) {
-                    sendMessage(sender, "&cYou couldn't withdraw &b$unaddedBlocks &cblocks as your inventory was too full!")
-                    file.addToBal(unaddedBlocks * 9)
-                }
-
-                sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b${total - (unaddedBlocks * 9)}&7!")
+            if (unaddedBlocks > 0) {
+                sendMessage(sender, "&cYou couldn't withdraw &b$unaddedBlocks &cblocks as your inventory was too full!")
+                file.addToBal(unaddedBlocks * 9)
             }
-            "diamonds", "d", "diamond" -> {
-                if (amount > bal) return sendMessage(sender, "&cYou don't have enough money!")
-                file.setBal(bal - amount)
-                val (_, unaddedDiamonds) = addDiamonds(core, player, 0, amount)
 
-                if (unaddedDiamonds > 0) {
-                    sendMessage(sender, "&cYou couldn't withdraw &b$unaddedDiamonds &cdiamonds as your inventory was too full!")
-                    file.addToBal(unaddedDiamonds)
-                }
+            sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b${total - (unaddedBlocks * 9)}&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
+        } else {
+            if (amount > bal) return sendMessage(sender, "&cYou don't have enough money!")
+            file.setBal(bal - amount)
+            val (_, unaddedDiamonds) = addDiamonds(core, player, 0, amount)
 
-                val totalChanged = amount - unaddedDiamonds
-
-                sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b$totalChanged&7!")
+            if (unaddedDiamonds > 0) {
+                sendMessage(sender, "&cYou couldn't withdraw &b$unaddedDiamonds &cdiamonds as your inventory was too full!")
+                file.addToBal(unaddedDiamonds)
             }
+
+            val totalChanged = amount - unaddedDiamonds
+
+            sendMessage(sender, "&7You have withdrawn &3$moneySymbol&b$totalChanged&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
         }
     }
 

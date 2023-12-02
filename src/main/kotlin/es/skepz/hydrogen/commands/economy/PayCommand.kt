@@ -22,7 +22,11 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "/pay <player> <amou
             return sendMessage(sender, "&cThat player does not exist or is not online!")
 
         // get the amount specified by the user
-        val amount = args[1].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
+        var amount = args[1].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
+
+        if (args.size == 2 && (args[1] == "blocks" || args[1] == "block" || args[1] == "b")) {
+            amount *= 9
+        }
 
         // get the player's user file
         val file = getUserFile(core, player)

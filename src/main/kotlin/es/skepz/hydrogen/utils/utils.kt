@@ -77,7 +77,7 @@ fun getDiamondsCanBeAdded(core: Hydrogen, player: Player): Int {
 }
 
 fun addDiamonds(core: Hydrogen, player: Player, blocks: Int, diamonds: Int): Pair<Int, Int> {
-    val moneySymbol = core.files.getMoneySymbol()
+    //val moneySymbol = core.files.getMoneySymbol()
 
     val maxBlocks = getBlocksCanBeAdded(core, player)
 
@@ -90,14 +90,14 @@ fun addDiamonds(core: Hydrogen, player: Player, blocks: Int, diamonds: Int): Pai
     }
 
     val blockItem = ItemStack(Material.DIAMOND_BLOCK, blocksToAdd)
-    val bmeta = blockItem.itemMeta
-    bmeta.displayName(Component.text(colorize("&b&lBlocks")))
-    bmeta.lore(listOf(
-        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
-        Component.text(colorize("&7Value: &3$moneySymbol&b9 &7/ block")),
-        Component.text(colorize("&eCertified Shiny!"))))
-    bmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
-    blockItem.itemMeta = bmeta
+//    val bmeta = blockItem.itemMeta
+//    bmeta.displayName(Component.text(colorize("&b&lBlocks")))
+//    bmeta.lore(listOf(
+//        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
+//        Component.text(colorize("&7Value: &3$moneySymbol&b9 &7/ block")),
+//        Component.text(colorize("&eCertified Shiny!"))))
+//    bmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
+//    blockItem.itemMeta = bmeta
 
     player.inventory.addItem(blockItem)
 
@@ -111,14 +111,14 @@ fun addDiamonds(core: Hydrogen, player: Player, blocks: Int, diamonds: Int): Pai
     }
 
     val diamondItem = ItemStack(Material.DIAMOND, diamondsToAdd)
-    val dmeta = diamondItem.itemMeta
-    dmeta.displayName(Component.text(colorize("&b&lDiamonds")))
-    dmeta.lore(listOf(
-        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
-        Component.text(colorize("&7Value: &3$moneySymbol&b1 &7/ item")),
-        Component.text(colorize("&eCertified Shiny!"))))
-    dmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
-    diamondItem.itemMeta = dmeta
+//    val dmeta = diamondItem.itemMeta
+//    dmeta.displayName(Component.text(colorize("&b&lDiamonds")))
+//    dmeta.lore(listOf(
+//        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
+//        Component.text(colorize("&7Value: &3$moneySymbol&b1 &7/ item")),
+//        Component.text(colorize("&eCertified Shiny!"))))
+//    dmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
+//    diamondItem.itemMeta = dmeta
 
     player.inventory.addItem(diamondItem)
 
