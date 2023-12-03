@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class UnverifyCommand(val core: Hydrogen) : CoreCMD(core, "unverify", "/unverify <player>", 1,
+class UnverifyCommand(val core: Hydrogen) : CoreCMD(core, "unverify", "<red>/unverify <<gray>player<red>>", 1,
     "hydrogen.command.unverify", false, true) {
 
     override fun run() {
@@ -17,14 +17,14 @@ class UnverifyCommand(val core: Hydrogen) : CoreCMD(core, "unverify", "/unverify
         val player = core.server.getPlayer(args[0]) ?: core.server.getOfflinePlayer(args[0])
 
         // get the file
-        val file = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "&cThat player has never joined the server!")
+        val file = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "<red>That player has never joined the server!")
 
-        if (!file.isVerified()) return sendMessage(sender, "&cThat player is not verified!")
+        if (!file.isVerified()) return sendMessage(sender, "<red>That player is not verified!")
 
         file.setVerified(false)
-        sendMessage(sender, "&7Player &b${player.name} &7has been unverified!")
+        sendMessage(sender, "<gray>Player <aqua>${player.name} <gray>has been unverified!")
         if (player is Player) {
-            sendMessage(player, "&7You have been unverified!")
+            sendMessage(player, "<gray>You have been unverified!")
         }
     }
 

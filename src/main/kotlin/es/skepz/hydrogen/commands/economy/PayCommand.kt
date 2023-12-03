@@ -8,7 +8,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "&c/pay <&7player&c> <&7amount&c>",
+class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "<red>/pay <<gray>player<red>> <<gray>amount<red>>",
     2, "none", true, true) {
 
     override fun run() {
@@ -19,10 +19,10 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "&c/pay <&7player&c>
 
         // get the player if they exist
         val targetPlayer = core.server.getPlayer(target) ?:
-            return sendMessage(sender, "&cThat player does not exist or is not online!")
+            return sendMessage(sender, "<red>That player does not exist or is not online!")
 
         // get the amount specified by the user
-        var amount = args[1].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount.")
+        var amount = args[1].toIntOrNull() ?: return sendMessage(sender, "<red>Invalid amount.")
 
         if (args.size == 2 && (args[1] == "blocks" || args[1] == "block" || args[1] == "b")) {
             amount *= 9
@@ -37,13 +37,13 @@ class PayCommand(val core: Hydrogen) : CoreCMD(core, "pay", "&c/pay <&7player&c>
         val balance = file.getBal()
 
         if (amount > balance) {
-            return sendMessage(sender, "&cYou do not have enough money to do that.")
+            return sendMessage(sender, "<red>You do not have enough money to do that.")
         }
 
         targetFile.addToBal(amount)
         file.rmFromBal(amount)
-        sendMessage(sender, "&7You have sent &b$target &3$moneySymbol&b$amount&7.")
-        sendMessage(targetPlayer, "&7You have received &3$moneySymbol&b$amount&7 from &b${player.name}&7.")
+        sendMessage(sender, "<gray>You have sent <aqua>$target <dark_aqua>$moneySymbol<aqua>$amount<gray>.")
+        sendMessage(targetPlayer, "<gray>You have received <dark_aqua>$moneySymbol<aqua>$amount<gray> from <aqua>${player.name}<gray>.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

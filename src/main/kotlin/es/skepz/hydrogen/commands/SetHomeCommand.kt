@@ -10,7 +10,7 @@ import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
 
-class SetHomeCommand(val core: Hydrogen) : CoreCMD(core, "sethome", "&c/sethome <&7name&c>",
+class SetHomeCommand(val core: Hydrogen) : CoreCMD(core, "sethome", "<red>/sethome <<gray>name<red>>",
     1, "none", true, false) {
 
     override fun run() {
@@ -20,7 +20,7 @@ class SetHomeCommand(val core: Hydrogen) : CoreCMD(core, "sethome", "&c/sethome 
 
         for (c in name) {
             if (c !in 'A'..'Z' && c !in 'a'..'z' && c !in '0'..'9' && c != '_') {
-                sendMessage(player, "&cFailed to set home: &f$name&c is not a valid name! must only contain a-z, 0-9 or underscores!")
+                sendMessage(player, "<red>Failed to set home: <gray>$name<red> is not a valid name! must only contain a-z, 0-9 or underscores!")
                 return
             }
         }
@@ -30,21 +30,21 @@ class SetHomeCommand(val core: Hydrogen) : CoreCMD(core, "sethome", "&c/sethome 
         // check if the home exists and if the user wants to overwrite it
         if (file.homeExists(name)) {
             val home = file.getHome(name)!!
-            sendConfirmMsg(core, player, "You already have a home named &b$name&7! Do you want to overwrite it?") { confirm ->
+            sendConfirmMsg(core, player, "You already have a home named <aqua>$name<gray>! Do you want to overwrite it?") { confirm ->
                 if (!confirm) {
-                    sendMessage(player, "&cHome not overwritten!")
+                    sendMessage(player, "<red>Home not overwritten!")
                     return@sendConfirmMsg
                 }
                 file.setHome(name, loc)
-                sendMessage(player, "&7You have overwritten &b$name&7!\n" +
-                        "&7The previous location was in &b${home.world.name} &7at: &7x:&b ${home.x} &7y:&b ${home.y} &7z:&b ${home.z}")
+                sendMessage(player, "<gray>You have overwritten <aqua>$name<gray>!\n" +
+                        "<gray>The previous location was in <aqua>${home.world.name} <gray>at: <gray>x:<aqua> ${home.x} <gray>y:<aqua> ${home.y} <gray>z:<aqua> ${home.z}")
                 playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
             }
             return
         }
 
         file.setHome(name, loc)
-        sendMessage(player, "&7New home set!")
+        sendMessage(player, "<gray>New home set!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }
 

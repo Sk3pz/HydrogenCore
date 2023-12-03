@@ -10,6 +10,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.player.*
 
 class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
@@ -19,6 +20,7 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
     }
 
     private fun dong(player: Player) {
+        sendMessage(player, "<red>You must be verified to do that!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BASS, 5, 0.0f)
     }
 
@@ -27,7 +29,6 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }
@@ -37,7 +38,6 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }
@@ -47,7 +47,6 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }
@@ -57,7 +56,6 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }
@@ -67,18 +65,18 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }
 
     @EventHandler
-    fun onPickup(event: PlayerPickupItemEvent) {
+    fun onPickup(event: EntityPickupItemEvent) {
         if (!isEnabled()) return
-        if (!checkVerification(core, event.player)) {
+        if (event.entity !is Player) return
+        val player = event.entity as Player
+        if (!checkVerification(core, player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
-            dong(event.player)
+            dong(player)
         }
     }
 
@@ -87,7 +85,6 @@ class VerificationEvents(val core: Hydrogen) : CoreEvent(core) {
         if (!isEnabled()) return
         if (!checkVerification(core, event.player)) {
             event.isCancelled = true
-            sendMessage(event.player, "&cYou must be verified to do that!")
             dong(event.player)
         }
     }

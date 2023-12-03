@@ -2,8 +2,6 @@ package es.skepz.hydrogen.commands.admin
 
 import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.colorize
-import es.skepz.hydrogen.skepzlib.genUsage
-import es.skepz.hydrogen.skepzlib.invalidCmdUsage
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import net.kyori.adventure.text.Component
@@ -16,7 +14,7 @@ import org.bukkit.inventory.meta.trim.TrimPattern
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c|&7lore&c|&7unbreakable&c|&7trim&c> <&7data&c>",
+class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "<red>/meta <<gray>name<red>|<gray>lore<red>|<gray>unbreakable<red>|<gray>trim<red>> <<gray>data<red>>",
     1, "hydrogen.command.meta", true, true) {
 
     override fun run() {
@@ -26,7 +24,7 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
 
         val item = player.inventory.itemInMainHand
         if (item.type == Material.AIR) {
-            sendMessage(sender, "&cYou must be holding something in your hand to use this command!")
+            sendMessage(sender, "<red>You must be holding something in your hand to use this command!")
             return;
         }
         val meta = item.itemMeta
@@ -34,7 +32,7 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
         when (modeRaw) {
             "unbreakable" -> { // /meta unbreakable
                 meta.isUnbreakable = !meta.isUnbreakable
-                sendMessage(sender, "&7Item is now ${if (meta.isUnbreakable) "&aunbreakable" else "&cbreakable"}")
+                sendMessage(sender, "<gray>Item is now ${if (meta.isUnbreakable) "<green>unbreakable" else "<red>breakable"}")
             }
             "upgrade" -> { // /meta upgrade
                 item.type = when (item.type) {
@@ -48,16 +46,16 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                     Material.DIAMOND_SHOVEL -> Material.NETHERITE_SHOVEL
                     Material.DIAMOND_HOE -> Material.NETHERITE_HOE
                     else -> {
-                        sendMessage(sender, "&cYou can only upgrade diamond tools and armor!")
+                        sendMessage(sender, "<red>You can only upgrade diamond tools and armor!")
                         return
                     }
                 }
-                sendMessage(sender, "&7Item upgraded!")
+                sendMessage(sender, "<gray>Item upgraded!")
             }
             "trim" -> { // /meta trim <trim name> <material>
                 // check if item is armor
                 if (!item.type.name.endsWith("_HELMET") && !item.type.name.endsWith("_CHESTPLATE") && !item.type.name.endsWith("_LEGGINGS") && !item.type.name.endsWith("_BOOTS")) {
-                    sendMessage(sender, "&cYou can only upgrade armor!")
+                    sendMessage(sender, "<red>You can only upgrade armor!")
                     return
                 }
 
@@ -65,7 +63,7 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
 
                 if (args[0] == "remove") {
                     ameta.trim = null
-                    sendMessage(sender, "&7Trim removed!")
+                    sendMessage(sender, "<gray>Trim removed!")
                     return
                 }
 
@@ -92,7 +90,7 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                     "raiser" -> TrimPattern.RAISER
                     "host" -> TrimPattern.HOST
                     else -> {
-                        sendMessage(sender, "&cInvalid trim name!")
+                        sendMessage(sender, "<red>Invalid trim name!")
                         return
                     }
                 }
@@ -108,13 +106,13 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                     "quartz" -> TrimMaterial.QUARTZ
                     "redstone" -> TrimMaterial.REDSTONE
                     else -> {
-                        sendMessage(sender, "&cInvalid trim material!")
+                        sendMessage(sender, "<red>Invalid trim material!")
                         return
                     }
                 }
 
                 ameta.trim = ArmorTrim(material, trimName)
-                sendMessage(sender, "&7Trim updated!")
+                sendMessage(sender, "<gray>Trim updated!")
             }
             "name" -> { // /meta name <name>
                 if (args.size < 1) {
@@ -123,8 +121,8 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                     return
                 }
                 val data = colorize(args.joinToString(" "))
-                meta.displayName(Component.text(data))
-                sendMessage(sender, "&7Item name set to: &f$data")
+                meta.displayName(data)
+                sendMessage(sender, "<gray>Item name updated!")
             }
             "lore" -> { // /meta lore <lore>
                 if (args.size < 1) {
@@ -136,10 +134,10 @@ class MetaCommand(val core: Hydrogen) : CoreCMD(core, "meta", "&c/meta <&7name&c
                 val list = mutableListOf<Component>()
                 val lore = data.split("\\n")
                 for (line in lore) {
-                    list.add(Component.text(colorize(line)))
+                    list.add(colorize(line))
                 }
                 meta.lore(list)
-                sendMessage(sender, "&7Item lore set to: &f$data")
+                sendMessage(sender, "<gray>Item lore updated!")
             }
             else -> {
                 invalidUse()

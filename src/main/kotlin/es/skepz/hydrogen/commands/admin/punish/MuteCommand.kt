@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class MuteCommand(val core: Hydrogen) : CoreCMD(core, "mute", "&c/mute &c<&7name&c> <&7reason&c?>", 1,
+class MuteCommand(val core: Hydrogen) : CoreCMD(core, "mute", "<red>/mute <red><<gray>name<red>> <<gray>reason<red>?>", 1,
     "hydrogen.command.mute", false, true) {
 
     override fun run() {
@@ -41,7 +41,7 @@ class MuteCommand(val core: Hydrogen) : CoreCMD(core, "mute", "&c/mute &c<&7name
         val permissions = core.files.ranks.cfg.getStringList("ranks.$rank.permissions")
         if ((permissions.contains("*") || isOp)
             && !sender.hasPermission("quarkcore.punish-restriction-bypass") && !sender.hasPermission("*")) {
-            sender.sendMessage("&cYou cannot mute this player!")
+            sender.sendMessage("<red>You cannot mute this player!")
             return
         }
 
@@ -49,9 +49,9 @@ class MuteCommand(val core: Hydrogen) : CoreCMD(core, "mute", "&c/mute &c<&7name
         file.setMuted(reason, senderName)
         file.addMute()
 
-        sendMessage(sender, "&7You have muted &b$target &7for &b$reason&a.")
+        sendMessage(sender, "<gray>You have muted <aqua>$target <gray>for <aqua>$reason<green>.")
         if (targetPlayer is Player) {
-            sendMessage(targetPlayer, "&7You have been muted by &b$senderName&7 for &b$reason&7.")
+            sendMessage(targetPlayer, "<gray>You have been muted by <aqua>$senderName<gray> for <aqua>$reason<gray>.")
         }
         Bukkit.getLogger().severe("$senderName has muted $target for $reason")
     }

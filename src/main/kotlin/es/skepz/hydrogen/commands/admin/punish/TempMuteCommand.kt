@@ -12,7 +12,7 @@ import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
 class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
-    "&c/tempmute <&7name&c> <&7time&c> <&7seconds&c|&7minutes&c|&7hours&c|&7days&c|&7years&c> <&7reason&c?>", 2,
+    "<red>/tempmute <<gray>name<red>> <<gray>time<red>> <<gray>seconds<red>|<gray>minutes<red>|<gray>hours<red>|<gray>days<red>|<gray>years<red>> <<gray>reason<red>?>", 2,
     "hydrogen.command.tempmute", false, true) {
 
     override fun run() {
@@ -23,7 +23,7 @@ class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
         else "Console"
 
         var time = args[1].toLongOrNull() ?: run {
-            sendMessage(sender, "&cInvalid time: ${args[1]}")
+            sendMessage(sender, "<red>Invalid time: ${args[1]}")
             return
         }
 
@@ -36,7 +36,7 @@ class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
             "days", "day" -> time *= 86400000
             "years", "year" -> time *= 31536000000
             else -> {
-                sendMessage(sender, "&cInvalid time denominator!")
+                sendMessage(sender, "<red>Invalid time denominator!")
                 return
             }
         }
@@ -63,7 +63,7 @@ class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
         val permissions = core.files.ranks.cfg.getStringList("ranks.$rank.permissions")
         if ((permissions.contains("*") || isOp)
             && !sender.hasPermission("quarkcore.punish-restriction-bypass") && !sender.hasPermission("*")) {
-            sender.sendMessage("&cYou cannot mute this player!")
+            sender.sendMessage("<red>You cannot mute this player!")
             return
         }
 
@@ -71,9 +71,9 @@ class TempMuteCommand(val core: Hydrogen) : CoreCMD(core, "tempmute",
         file.setMuted(reason, senderName, time)
         file.addMute()
 
-        sendMessage(sender, "&7You have muted &b$target &7for &b$reason&a.")
+        sendMessage(sender, "<gray>You have muted <aqua>$target <gray>for <aqua>$reason<green>.")
         if (targetPlayer is Player) {
-            sendMessage(targetPlayer, "&7You have been muted by &b$senderName&7 for &b$reason&7 for &b$rawTime&7.")
+            sendMessage(targetPlayer, "<gray>You have been muted by <aqua>$senderName<gray> for <aqua>$reason<gray> for <aqua>$rawTime<gray>.")
         }
         Bukkit.getLogger().severe("$senderName has muted $target for $reason for $rawTime.")
     }

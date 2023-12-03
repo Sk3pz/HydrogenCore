@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <player>", 1,
+class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "<red>/verify <<gray>player<red>>", 1,
     "hydrogen.command.verify", false, true) {
 
     override fun run() {
@@ -19,16 +19,16 @@ class VerifyCommand(val core: Hydrogen) : CoreCMD(core, "verify", "/verify <play
         val player = core.server.getPlayer(args[0]) ?: core.server.getOfflinePlayer(args[0])
 
         // get the file
-        val file = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "&cThat player has never joined the server!")
+        val file = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "<red>That player has never joined the server!")
 
-        if (file.isVerified()) return sendMessage(sender, "&cThat player is already verified!")
+        if (file.isVerified()) return sendMessage(sender, "<red>That player is already verified!")
 
         file.setVerified(true)
-        sendMessage(sender, "&7Player &b${player.name} &7has been verified!")
+        sendMessage(sender, "<gray>Player <aqua>${player.name} <gray>has been verified!")
 
         if (player is Player) {
             refreshPermissions(core, player)
-            sendMessage(player, "&7You have been verified!")
+            sendMessage(player, "<gray>You have been verified!")
         }
     }
 

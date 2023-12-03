@@ -8,7 +8,7 @@ import es.skepz.hydrogen.utils.getSpawn
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 
-class SpawnCommand(val core: Hydrogen) : CoreCMD(core, "spawn", "&c/spawn", 0,
+class SpawnCommand(val core: Hydrogen) : CoreCMD(core, "spawn", "<red>/spawn", 0,
     "none", true, false) {
 
     override fun run() {
@@ -16,7 +16,7 @@ class SpawnCommand(val core: Hydrogen) : CoreCMD(core, "spawn", "&c/spawn", 0,
 
         player.teleport(getSpawn(core))
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
-        sendMessage(player, "&7Woosh! You have been teleported to spawn!")
+        sendMessage(player, "<gray>Woosh! You have been teleported to spawn!")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

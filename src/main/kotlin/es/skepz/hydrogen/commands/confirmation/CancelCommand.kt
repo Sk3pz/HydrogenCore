@@ -5,7 +5,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class CancelCommand(val core: Hydrogen) : CoreCMD(core, "core_cancel", "&c/core_cancel",
+class CancelCommand(val core: Hydrogen) : CoreCMD(core, "core_cancel", "<red>/core_cancel",
     0, "none", true, false) {
 
     override fun run() {
@@ -13,7 +13,7 @@ class CancelCommand(val core: Hydrogen) : CoreCMD(core, "core_cancel", "&c/core_
         if (core.confirmMap.contains(player.uniqueId)) {
             core.confirmMap.remove(player.uniqueId)?.let { it(false) }
         } else {
-            return sendMessage(player, "&cYou have nothing to confirm.")
+            return sendMessage(player, "<red>You have nothing to confirm.")
         }
     }
 

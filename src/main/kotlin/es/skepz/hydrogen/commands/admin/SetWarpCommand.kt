@@ -12,7 +12,7 @@ import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
 
-class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "&c/setwarp <&7name&c> <&7permission?&c>",
+class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "<red>/setwarp <<gray>name<red>> <<gray>permission?<red>>",
     1, "hydrogen.command.setwarp", true, false) {
 
     override fun run() {
@@ -24,27 +24,27 @@ class SetWarpCommand(val core: Hydrogen) : CoreCMD(core, "setwarp", "&c/setwarp 
 
         for (c in name) {
             if (c !in 'A'..'Z' && c !in 'a'..'z' && c !in '0'..'9' && c != '_') {
-                sendMessage(player, "&cFailed to set warp: &f$name&c is not a valid name! must only contain a-z, 0-9 or underscores!")
+                sendMessage(player, "<red>Failed to set warp: <gray>$name<red> is not a valid name! must only contain a-z, 0-9 or underscores!")
                 return
             }
         }
 
         // check if the warp exists and if the user wants to overwrite it
         if (warpExists(core, name)) {
-            sendConfirmMsg(core, player, "A warp named &b$name&7 already exists! Do you want to overwrite it?") { confirm ->
+            sendConfirmMsg(core, player, "A warp named <aqua>$name<gray> already exists! Do you want to overwrite it?") { confirm ->
                 if (!confirm) {
-                    sendMessage(player, "&cWarp not overwritten!")
+                    sendMessage(player, "<red>Warp not overwritten!")
                     return@sendConfirmMsg
                 }
                 setWarp(core, name, loc, permission)
-                sendMessage(player, "&7Warp &b$name&7 has been overwritten!")
+                sendMessage(player, "<gray>Warp <aqua>$name<gray> has been overwritten!")
                 playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
             }
             return
         }
 
         setWarp(core, name, loc, permission)
-        sendMessage(player, "&7New warp set!")
+        sendMessage(player, "<gray>New warp set!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }
 

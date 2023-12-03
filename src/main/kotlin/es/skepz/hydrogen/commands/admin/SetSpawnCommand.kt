@@ -7,7 +7,7 @@ import es.skepz.hydrogen.utils.setSpawn
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
 
-class SetSpawnCommand(val core: Hydrogen) : CoreCMD(core, "setspawn", "&c/setspawn",
+class SetSpawnCommand(val core: Hydrogen) : CoreCMD(core, "setspawn", "<red>/setspawn",
     0, "hydrogen.command.setspawn", true, false) {
 
     override fun init() {
@@ -18,7 +18,7 @@ class SetSpawnCommand(val core: Hydrogen) : CoreCMD(core, "setspawn", "&c/setspa
         val loc = getPlayer()!!.location
 
         setSpawn(core, loc)
-        sendMessage(sender, "&7Spawn set to your position.")
+        sendMessage(sender, "<gray>Spawn set to your position.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

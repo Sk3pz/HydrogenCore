@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "&c/kick <&7name&c> <&7reason&c?>", 1,
+class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "<red>/kick <<gray>name<red>> <<gray>reason<red>?>", 1,
     "hydrogen.command.kick", false, true) {
 
     override fun run() {
@@ -30,7 +30,7 @@ class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "&c/kick <&7name&c
             "No reason provided"
         }
 
-        val targetPlayer = core.server.getPlayer(target) ?: return sendMessage(sender, "&cThat player is not online!")
+        val targetPlayer = core.server.getPlayer(target) ?: return sendMessage(sender, "<red>That player is not online!")
 
         // get the target's file
         val file = UserFile(core, targetPlayer)
@@ -43,7 +43,7 @@ class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "&c/kick <&7name&c
         val permissions = core.files.ranks.cfg.getStringList("ranks.$rank.permissions")
         if ((permissions.contains("*") || isOp)
             && !sender.hasPermission("quarkcore.punish-restriction-bypass") && !sender.hasPermission("*")) {
-            sender.sendMessage("&cYou cannot kick this player!")
+            sender.sendMessage("<red>You cannot kick this player!")
             return
         }
 
@@ -51,13 +51,11 @@ class KickCommand(val core: Hydrogen) : CoreCMD(core, "kick", "&c/kick <&7name&c
         file.addKick()
 
         // kick the player if they are online
-        targetPlayer.kick(
-                Component.text(
-                    colorize("&cYou are kicked from this server!\n" +
-                            "&cReason: &f$reason\n" +
-                            "&cKicked by: &f$senderName\n")))
+        targetPlayer.kick(colorize("<red>You are kicked from this server!\n" +
+                            "<red>Reason: <gray>$reason\n" +
+                            "<red>Kicked by: <gray>$senderName\n"))
 
-        sendMessage(sender, "&7You have kicked &b$target &7for &b$reason&7.")
+        sendMessage(sender, "<gray>You have kicked <aqua>$target <gray>for <aqua>$reason<gray>.")
         Bukkit.getLogger().severe("$senderName has kicked $target for $reason")
     }
 

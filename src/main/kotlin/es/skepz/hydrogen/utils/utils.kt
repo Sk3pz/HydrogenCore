@@ -16,15 +16,15 @@ import java.util.*
 
 fun sendConfirmMsg(core: Hydrogen, player: Player, msg: String, callback: (confirm: Boolean) -> Unit) {
     playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 0.2f)
-    IMessage("\n&6&lConfirmation Required&r\n")
-        .add("&7$msg\n")
-        .add("&7&oType or click on one of the following options:\n")
-        .addHoverableClickCmd("  &a&oConfirm&r\n", "/core_confirm ${player.name}", "&7Confirm the action")
-        .addHoverableClickCmd("  &c&oCancel&r", "/core_cancel ${player.name}", "&7Cancel the action")
+    IMessage("\n<gold><bold>Confirmation Required<reset>\n")
+        .add("<gray>$msg\n")
+        .add("<gray>&oType or click on one of the following options:\n")
+        .addHoverableClickCmd("  <green>&oConfirm<reset>\n", "/core_confirm ${player.name}", "<gray>Confirm the action")
+        .addHoverableClickCmd("  <red>&oCancel<reset>", "/core_cancel ${player.name}", "<gray>Cancel the action")
         .add("\n")
         .send(player)
-//    sendMessage(player,"&7&l$msg")
-//    sendMessage(player, "&7Type &aConfirm &7or &ccancel&7.")
+//    sendMessage(player,"<gray><bold>$msg")
+//    sendMessage(player, "<gray>Type <green>Confirm <gray>or <red>cancel<gray>.")
     core.confirmMap[player.uniqueId] = callback
 }
 
@@ -91,11 +91,11 @@ fun addDiamonds(core: Hydrogen, player: Player, blocks: Int, diamonds: Int): Pai
 
     val blockItem = ItemStack(Material.DIAMOND_BLOCK, blocksToAdd)
 //    val bmeta = blockItem.itemMeta
-//    bmeta.displayName(Component.text(colorize("&b&lBlocks")))
+//    bmeta.displayName(Component.text(colorize("<aqua><bold>Blocks")))
 //    bmeta.lore(listOf(
-//        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
-//        Component.text(colorize("&7Value: &3$moneySymbol&b9 &7/ block")),
-//        Component.text(colorize("&eCertified Shiny!"))))
+//        Component.text(colorize("<gray>Backed by the <aqua>Hydrogen <gray>economy!")),
+//        Component.text(colorize("<gray>Value: <dark_aqua>$moneySymbol<aqua>9 <gray>/ block")),
+//        Component.text(colorize("<yellow>Certified Shiny!"))))
 //    bmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
 //    blockItem.itemMeta = bmeta
 
@@ -112,11 +112,11 @@ fun addDiamonds(core: Hydrogen, player: Player, blocks: Int, diamonds: Int): Pai
 
     val diamondItem = ItemStack(Material.DIAMOND, diamondsToAdd)
 //    val dmeta = diamondItem.itemMeta
-//    dmeta.displayName(Component.text(colorize("&b&lDiamonds")))
+//    dmeta.displayName(Component.text(colorize("<aqua><bold>Diamonds")))
 //    dmeta.lore(listOf(
-//        Component.text(colorize("&7Backed by the &bHydrogen &7economy!")),
-//        Component.text(colorize("&7Value: &3$moneySymbol&b1 &7/ item")),
-//        Component.text(colorize("&eCertified Shiny!"))))
+//        Component.text(colorize("<gray>Backed by the <aqua>Hydrogen <gray>economy!")),
+//        Component.text(colorize("<gray>Value: <dark_aqua>$moneySymbol<aqua>1 <gray>/ item")),
+//        Component.text(colorize("<yellow>Certified Shiny!"))))
 //    dmeta.persistentDataContainer.set(core.diamondKey, PersistentDataType.INTEGER, 1)
 //    diamondItem.itemMeta = dmeta
 

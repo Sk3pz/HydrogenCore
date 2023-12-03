@@ -10,7 +10,7 @@ import org.bukkit.util.StringUtil
 import java.util.*
 import kotlin.collections.HashMap
 
-class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7player&c?>",
+class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "<red>/tpdeny <<gray>player<red>?>",
     0, "none", true, true) {
 
     override fun run() {
@@ -34,26 +34,26 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
         if (args.size > 0) {
             val requester = Bukkit.getPlayer(args[0])
             if (requester == null) {
-                sendMessage(sender, "&cThat player either is not online or does not exist!")
+                sendMessage(sender, "<red>That player either is not online or does not exist!")
                 return
             }
 
             if (requests[requester.uniqueId] != null) {
                 // teleport requester to target (sender)
-                sendMessage(sender, "&7You have denied &b${requester.name}&7's request to teleport to you.")
-                sendMessage(requester, "&b${player.name} &chas denied your request to teleport to them.")
+                sendMessage(sender, "<gray>You have denied <aqua>${requester.name}<gray>'s request to teleport to you.")
+                sendMessage(requester, "<aqua>${player.name} <red>has denied your request to teleport to them.")
                 core.tpaRequests.remove(requester.uniqueId)
                 return
             }
             if (hereRequests[requester.uniqueId] != null) {
                 // teleport target (sender) to requester
-                sendMessage(sender, "&7You have denied &b${requester.name}&7's request to teleport you to them.")
-                sendMessage(requester, "&b${player.name} &chas denied your request to teleport them to you.")
+                sendMessage(sender, "<gray>You have denied <aqua>${requester.name}<gray>'s request to teleport you to them.")
+                sendMessage(requester, "<aqua>${player.name} <red>has denied your request to teleport them to you.")
                 core.tpahereRequests.remove(requester.uniqueId)
                 return
             }
 
-            sendMessage(sender, "&cYou don't currently have any requests from this person. Maybe they canceled their request?")
+            sendMessage(sender, "<red>You don't currently have any requests from this person. Maybe they canceled their request?")
             return
         }
 
@@ -67,11 +67,11 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
             val requester = Bukkit.getPlayer(ruid)
             if (requester == null) {
                 // inform player
-                sendMessage(sender, "&cThat player could not be found. They probably logged off.")
+                sendMessage(sender, "<red>That player could not be found. They probably logged off.")
                 return
             }
-            sendMessage(sender, "&7You have denied &b${requester.name}&7's request to teleport to you.")
-            sendMessage(requester, "&b${player.name} &chas denied your request to teleport to them.")
+            sendMessage(sender, "<gray>You have denied <aqua>${requester.name}<gray>'s request to teleport to you.")
+            sendMessage(requester, "<aqua>${player.name} <red>has denied your request to teleport to them.")
             return
         }
         if (requests.size == 0 && hereRequests.size == 1) {
@@ -82,18 +82,18 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
             val requester = Bukkit.getPlayer(ruid)
             if (requester == null) {
                 // inform player
-                sendMessage(sender, "&cThat player could not be found. They probably logged off.")
+                sendMessage(sender, "<red>That player could not be found. They probably logged off.")
                 return
             }
-            sendMessage(sender, "&7You have denied &b${requester.name}&7's request to teleport you to them.")
-            sendMessage(requester, "&b${player.name} &chas denied your request to teleport them to you.")
+            sendMessage(sender, "<gray>You have denied <aqua>${requester.name}<gray>'s request to teleport you to them.")
+            sendMessage(requester, "<aqua>${player.name} <red>has denied your request to teleport them to you.")
             return
         }
 
         // multiple requests, give them a list
-        val imsg = IMessage("&cYou have multiple requests. Use /tpdeny <name> to specify which one.\n&7&lChoose which request to deny:\n")
+        val imsg = IMessage("<red>You have multiple requests. Use /tpdeny <name> to specify which one.\n<gray><bold>Choose which request to deny:\n")
         if (requests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport to you:\n")
+            imsg.add(" <gray>> Requesting to teleport to you:\n")
             var x = 0
             for ((r, _) in requests) {
                 val p = Bukkit.getPlayer(r)
@@ -101,9 +101,9 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
                     core.tpaRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != requests.size - 1) {
                     imsg.add("\n")
                 }
@@ -111,7 +111,7 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
             }
         }
         if (hereRequests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport you to them:\n")
+            imsg.add(" <gray>> Requesting to teleport you to them:\n")
             var x = 0
             for ((r, _) in hereRequests) {
                 val p = Bukkit.getPlayer(r)
@@ -119,9 +119,9 @@ class TpdenyCommand(val core: Hydrogen) : CoreCMD(core, "tpdeny", "&c/tpdeny <&7
                     core.tpahereRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != hereRequests.size - 1) {
                     imsg.add("\n")
                 }

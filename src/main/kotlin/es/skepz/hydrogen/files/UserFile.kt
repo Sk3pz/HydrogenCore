@@ -199,7 +199,7 @@ class UserFile(plugin: Hydrogen, player: UUID) : CFGFile(plugin, player.toString
         reload()
         if (shouldUnban()) {
             setUnbanned()
-            sendMessage(Bukkit.getConsoleSender(), "&cUNBANNED") // ----------------------- DEBUG
+            sendMessage(Bukkit.getConsoleSender(), "<red>UNBANNED") // ----------------------- DEBUG
             return false
         }
         return cfg.getBoolean("punishments.banned.enabled")

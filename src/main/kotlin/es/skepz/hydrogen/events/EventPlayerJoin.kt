@@ -7,7 +7,6 @@ import es.skepz.hydrogen.skepzlib.serverBroadcast
 import es.skepz.hydrogen.skepzlib.wrappers.CoreEvent
 import es.skepz.hydrogen.utils.getSpawn
 import es.skepz.hydrogen.utils.login
-import net.kyori.adventure.text.Component
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerLoginEvent
@@ -16,16 +15,16 @@ class EventPlayerJoin(private val core: Hydrogen) : CoreEvent(core) {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        event.joinMessage(Component.text(colorize("&8(&a+&8) &7${event.player.name}")))
+        event.joinMessage(colorize("<dark_gray>(<green>+<dark_gray>) <gray>${event.player.name}"))
 
         if (!event.player.hasPlayedBefore()) {
-            serverBroadcast("&7Please welcome &b${event.player.name} &7to the server!")
+            serverBroadcast("<gray>Please welcome <aqua>${event.player.name} <gray>to the server!")
             event.player.teleport(getSpawn(core))
         }
 
-        info(event.player, "Welcome to the server!", "Thanks for playing!", "&7Welcome to the server!\n" +
-                "&7Be sure to do &3/rules&7 to read the rules!\n" +
-                "&7Do &3/spawn &7to go to spawn!")
+        info(event.player, "Welcome to the server!", "Thanks for playing!", "<gray>Welcome to the server!\n" +
+                "<gray>Be sure to do <dark_aqua>/rules<gray> to read the rules!\n" +
+                "<gray>Do <dark_aqua>/spawn <gray>to go to spawn!")
     }
 
     @EventHandler

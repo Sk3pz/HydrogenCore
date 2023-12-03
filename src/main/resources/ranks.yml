@@ -6,40 +6,33 @@ ranks:
     chatColor: '&7'
     isOp: false
   vip:
-    prefix: '&a&lVIP'
+    prefix: '&2<bold>VIP'
     nameColor: '&a'
-    chatColor: '&f'
+    chatColor: '&7'
     isOp: false
     permissions:
       - 'hydrogen.command.fly'
       - 'hydrogen.command.hat'
   moderator:
-    prefix: '&9&lMod'
+    prefix: '&9<bold>Mod'
     nameColor: '&3'
-    chatColor: '&f'
+    chatColor: '&7'
     isOp: false
     permissions:
       - 'hydrogen.command.tempban'
       - 'hydrogen.command.tempmute'
       - 'hydrogen.command.lookup'
   admin:
-    prefix: '&4&lAdmin'
+    prefix: '&7<bold>Admin'
     nameColor: '&c'
-    chatColor: '&f'
-    isOp: true
-    permissions:
-      - '*'
-  dev:
-    prefix: '&3&lDev'
-    nameColor: '&b'
-    chatColor: '&f'
+    chatColor: '&7'
     isOp: true
     permissions:
       - '*'
   owner:
-    prefix: '&6&lOwner'
-    nameColor: '&e'
-    chatColor: '&f'
+    prefix: '&6<bold>Owner'
+    nameColor: '&6'
+    chatColor: '&7'
     isOp: true
     permissions:
       - '*'

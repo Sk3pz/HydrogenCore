@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class LookupCommand(val core: Hydrogen) : CoreCMD(core, "lookup", "&c/lookup <&7player&c>",
+class LookupCommand(val core: Hydrogen) : CoreCMD(core, "lookup", "<red>/lookup <<gray>player<red>>",
     1, "hydrogen.command.lookup", false, true) {
 
     override fun run() {
@@ -18,7 +18,7 @@ class LookupCommand(val core: Hydrogen) : CoreCMD(core, "lookup", "&c/lookup <&7
         val player = core.server.getPlayer(args[0]) ?: core.server.getOfflinePlayer(args[0])
 
         // get the target's user file if it exists
-        val rfile = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "&cThat player does not exist or has not played before!")
+        val rfile = getOfflineUserFileRaw(core, player.uniqueId) ?: return sendMessage(sender, "<red>That player does not exist or has not played before!")
         val file = UserFile(core, player, rfile)
 
         // get the user's file and information
@@ -36,19 +36,19 @@ class LookupCommand(val core: Hydrogen) : CoreCMD(core, "lookup", "&c/lookup <&7
         val isMuted = file.isMuted()
 
         // send the information to the sender
-        sendMessage(sender, "&7&m----------------------------------------\n"
-                + "&b&l$name &7(&b$uuid&7)\n"
-                + "&7Verified: &b$verified\n"
-                + "&7Rank: &b$rank\n"
-                + "&7Balance: &b$balance\n"
-                + "&7OP: &b$op\n"
-                + "&7First Joined: &b$firstJoined\n"
-                + "&7Bans: &b$bans\n"
-                + "&7Mutes: &b$mutes\n"
-                + "&7Kicks: &b$kicks\n"
-                + "&7Banned: &b$isBanned\n"
-                + "&7Muted: &b$isMuted\n"
-                + "&7&m----------------------------------------")
+        sendMessage(sender, "<gray><strikethrough>----------------------------------------\n"
+                + "<aqua><bold>$name <gray>(<aqua>$uuid<gray>)\n"
+                + "<gray>Verified: <aqua>$verified\n"
+                + "<gray>Rank: <aqua>$rank\n"
+                + "<gray>Balance: <aqua>$balance\n"
+                + "<gray>OP: <aqua>$op\n"
+                + "<gray>First Joined: <aqua>$firstJoined\n"
+                + "<gray>Bans: <aqua>$bans\n"
+                + "<gray>Mutes: <aqua>$mutes\n"
+                + "<gray>Kicks: <aqua>$kicks\n"
+                + "<gray>Banned: <aqua>$isBanned\n"
+                + "<gray>Muted: <aqua>$isMuted\n"
+                + "<gray><strikethrough>----------------------------------------")
 
     }
 

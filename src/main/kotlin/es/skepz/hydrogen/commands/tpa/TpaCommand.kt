@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "&c/tpa <&7player&c>",
+class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "<red>/tpa <<gray>player<red>>",
     1, "none", true, true) {
 
     override fun run() {
@@ -18,17 +18,17 @@ class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "&c/tpa <&7player&c>
 
         val target = Bukkit.getPlayer(name)
         if (target == null) {
-            sendMessage(sender, "&cThat player either isn't online or doesn't exist!")
+            sendMessage(sender, "<red>That player either isn't online or doesn't exist!")
             return
         }
 
         val player = getPlayer()!!
 
         // send request message to the target
-        IMessage("&7&lTeleport Request&r\n")
-            .add("&b${player.name} &7Would like to teleport to you.&r\n")
-            .addHoverableClickCmd("  &a&oAccept&r\n", "/tpaccept ${player.name}", "&7Allow &b${player.name} &7to teleport to your location")
-            .addHoverableClickCmd("  &c&oDeny&r", "/tpdeny ${player.name}", "&7Deny &b${player.name} &7teleportation to your location")
+        IMessage("<gray><bold>Teleport Request<reset>\n")
+            .add("<aqua>${player.name} <gray>Would like to teleport to you.<reset>\n")
+            .addHoverableClickCmd("  <green>&oAccept<reset>\n", "/tpaccept ${player.name}", "<gray>Allow <aqua>${player.name} <gray>to teleport to your location")
+            .addHoverableClickCmd("  <red>&oDeny<reset>", "/tpdeny ${player.name}", "<gray>Deny <aqua>${player.name} <gray>teleportation to your location")
             .send(target)
 
 
@@ -36,15 +36,15 @@ class TpaCommand(val core: Hydrogen) : CoreCMD(core, "tpa", "&c/tpa <&7player&c>
 
         // players can only have one outgoing request at a time
         if (core.tpaRequests.containsKey(player.uniqueId)) {
-            sendMessage(sender, "&cCanceled your previous tpa request. (you can only have 1 outgoing request at a time.)")
+            sendMessage(sender, "<red>Canceled your previous tpa request. (you can only have 1 outgoing request at a time.)")
         }
         core.tpaRequests[player.uniqueId] = target.uniqueId
         if (core.tpahereRequests.containsKey(player.uniqueId)) {
             core.tpahereRequests.remove(player.uniqueId)
-            sendMessage(sender, "&cCanceled your previous tpahere request. (you can only have 1 outgoing request at a time.)")
+            sendMessage(sender, "<red>Canceled your previous tpahere request. (you can only have 1 outgoing request at a time.)")
         }
 
-        sendMessage(sender, "&7You have requested to teleport to &b${target.name}&7!")
+        sendMessage(sender, "<gray>You have requested to teleport to <aqua>${target.name}<gray>!")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

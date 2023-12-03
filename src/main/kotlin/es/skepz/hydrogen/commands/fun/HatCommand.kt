@@ -4,7 +4,7 @@ import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 
-class HatCommand(val core: Hydrogen) : CoreCMD(core, "hat", "&c/hat", 0,
+class HatCommand(val core: Hydrogen) : CoreCMD(core, "hat", "<red>/hat", 0,
     "hydrogen.command.hat", true, false) {
 
     override fun run() {
@@ -12,13 +12,13 @@ class HatCommand(val core: Hydrogen) : CoreCMD(core, "hat", "&c/hat", 0,
 
         val item = player.inventory.itemInMainHand
         if (item.type.isAir) {
-            sendMessage(sender, "&cYou must be holding something in your hand to use this command!")
+            sendMessage(sender, "<red>You must be holding something in your hand to use this command!")
             return
         }
 
         val helmet = player.inventory.helmet
         player.inventory.helmet = item
         player.inventory.setItemInMainHand(helmet)
-        sendMessage(sender, "&7You have put &b${item.type.name}&7 on your head!")
+        sendMessage(sender, "<gray>You have put <aqua>${item.type.name}<gray> on your head!")
     }
 }

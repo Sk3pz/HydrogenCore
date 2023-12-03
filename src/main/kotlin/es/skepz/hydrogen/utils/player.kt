@@ -52,10 +52,10 @@ fun login(plugin: Hydrogen, player: Player, event: PlayerLoginEvent): Boolean {
     file.setLastLogin()
     // ban check
     if (file.isBanned()) {
-        event.kickMessage(Component.text(colorize("&cYou are banned from this server!\n" +
-                "&cReason: &f${file.banReason()}\n" +
-                (if (file.banSender() == "none") "" else "&cBanned by: &f${file.banSender()}\n") +
-                (if (file.banTime() == -1L) "&cThis ban is permanent." else "&cBanned until: &f${file.bannedUntil()}"))))
+        event.kickMessage(colorize("<red>You are banned from this server!\n" +
+                "<red>Reason: <gray>${file.banReason()}\n" +
+                (if (file.banSender() == "none") "" else "<red>Banned by: <gray>${file.banSender()}\n") +
+                (if (file.banTime() == -1L) "<red>This ban is permanent." else "<red>Banned until: <gray>${file.bannedUntil()}")))
         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, event.kickMessage())
         return false
     }
@@ -71,10 +71,10 @@ fun reloadLogin(plugin: Hydrogen, player: Player) {
     val file = UserFile(plugin, player)
     // ban check
     if (file.isBanned()) {
-        player.kick(Component.text(colorize("&cYou are banned from this server!\n" +
-                "&cReason: &f${file.banReason()}\n" +
-                (if (file.banSender() == "none") "" else "&cBanned by: &f${file.banSender()}\n") +
-                (if (file.banTime() == -1L) "&cThis ban is permanent." else "&cBanned until: &4${file.bannedUntil()}"))))
+        player.kick(colorize("<red>You are banned from this server!\n" +
+                "<red>Reason: <gray>${file.banReason()}\n" +
+                (if (file.banSender() == "none") "" else "<red>Banned by: <gray>${file.banSender()}\n") +
+                (if (file.banTime() == -1L) "<red>This ban is permanent." else "<red>Banned until: <dark_red>${file.bannedUntil()}")))
         return
     }
 

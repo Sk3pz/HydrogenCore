@@ -9,18 +9,18 @@ import org.bukkit.GameMode
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "&c/gamemode <&7gm&c> <&7player?&c>", 1,
+class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "<red>/gamemode <<gray>gm<red>> <<gray>player?<red>>", 1,
     "hydrogen.command.fly", false, true) {
 
     override fun run() {
         var other = false
         val target = if (args.size == 2) {
             if (!checkPermission(sender, "hydrogen.command.gamemode.others")) {
-                sendMessage(sender, "&cYou do not have permission to change other players' gamemode!")
+                sendMessage(sender, "<red>You do not have permission to change other players' gamemode!")
                 return
             }
             other = true
-            Bukkit.getPlayer(args[1]) ?: return sendMessage(sender, "&cInvalid player!")
+            Bukkit.getPlayer(args[1]) ?: return sendMessage(sender, "<red>Invalid player!")
         } else { getPlayer()!! }
 
         val mode = args[0].lowercase()
@@ -29,14 +29,14 @@ class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "&c/gamemo
             "1", "c", "creative" -> GameMode.CREATIVE
             "2", "a", "adventure" -> GameMode.ADVENTURE
             "3", "sp", "spectator" -> GameMode.SPECTATOR
-            else -> return sendMessage(sender, "&cInvalid gamemode! Valid gamemodes: &7survival&c, &7creative&c, &7adventure&c, &7spectator&c.")
+            else -> return sendMessage(sender, "<red>Invalid gamemode! Valid gamemodes: <gray>survival<red>, <gray>creative<red>, <gray>adventure<red>, <gray>spectator<red>.")
         }
 
         target.gameMode = gm
         if (other) {
-            sendMessage(sender, "&7Successfully changed &b${target.name}&7's gamemode to &b${gm.name.lowercase()}&7!")
+            sendMessage(sender, "<gray>Successfully changed <aqua>${target.name}<gray>'s gamemode to <aqua>${gm.name.lowercase()}<gray>!")
         } else {
-            sendMessage(sender, "&7Successfully changed your gamemode to &b${gm.name.lowercase()}&7!")
+            sendMessage(sender, "<gray>Successfully changed your gamemode to <aqua>${gm.name.lowercase()}<gray>!")
         }
     }
 

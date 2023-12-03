@@ -8,13 +8,13 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "&c/op <&7player&c>", 1,
+class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "<red>/op <<gray>player<red>>", 1,
     "hydrogen.command.op", false, true) {
 
     override fun run() {
         val target = Bukkit.getPlayer(args[0])
         if (target == null) {
-            sendMessage(sender, "&cPlayer not found.")
+            sendMessage(sender, "<red>Player not found.")
             return
         }
         target.isOp = true
@@ -22,11 +22,11 @@ class OpCommand(val core: Hydrogen) : CoreCMD(core, "op", "&c/op <&7player&c>", 
         val file = UserFile(core, target)
         file.setOp(true)
 
-        sendMessage(sender, "&7${target.name} is now a server operator.")
+        sendMessage(sender, "<gray>${target.name} is now a server operator.")
         if (sender != core.server.consoleSender) {
-            sendMessage(core.server.consoleSender, "&7${sender.name} has made ${target.name} a server operator.")
+            sendMessage(core.server.consoleSender, "<gray>${sender.name} has made ${target.name} a server operator.")
         }
-        sendMessage(target, "&7You are now a server operator.")
+        sendMessage(target, "<gray>You are now a server operator.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender
 import java.util.*
 import kotlin.collections.HashMap
 
-class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "&c/tplist",
+class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "<red>/tplist",
     0, "none", true, false) {
 
     override fun run() {
@@ -29,9 +29,9 @@ class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "&c/tplist",
         }
 
         // multiple requests, give them a list
-        val imsg = IMessage("&7&lYour tpa requests:\n")
+        val imsg = IMessage("<gray><bold>Your tpa requests:\n")
         if (requests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport to you:\n")
+            imsg.add(" <gray>> Requesting to teleport to you:\n")
             var x = 0
             for ((r, _) in requests) {
                 val p = Bukkit.getPlayer(r)
@@ -39,9 +39,9 @@ class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "&c/tplist",
                     core.tpaRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != requests.size - 1) {
                     imsg.add("\n")
                 }
@@ -49,7 +49,7 @@ class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "&c/tplist",
             }
         }
         if (hereRequests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport you to them:\n")
+            imsg.add(" <gray>> Requesting to teleport you to them:\n")
             var x = 0
             for ((r, _) in hereRequests) {
                 val p = Bukkit.getPlayer(r)
@@ -57,9 +57,9 @@ class TplistCommand(val core: Hydrogen) : CoreCMD(core, "tplist", "&c/tplist",
                     core.tpahereRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != hereRequests.size - 1) {
                     imsg.add("\n")
                 }

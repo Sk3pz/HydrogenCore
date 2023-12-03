@@ -9,28 +9,28 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class GodCommand(core: Hydrogen) : CoreCMD(core, "god", "&c/god", 0,
+class GodCommand(core: Hydrogen) : CoreCMD(core, "god", "<red>/god", 0,
     "hydrogen.command.god", false, true) {
 
     override fun run() {
         val target = if (args.size > 0) {
             if (!checkPermission(sender, "hydrogen.command.god.others"))
-                return sendMessage(sender, "&cYou do not have permission to set other players invulnerable!")
+                return sendMessage(sender, "<red>You do not have permission to set other players invulnerable!")
             Bukkit.getPlayer(args[0])
         } else {
             if (sender is Player) sender as Player
-            else return sendMessage(sender, "&cYou must be a player to use this command!")
+            else return sendMessage(sender, "<red>You must be a player to use this command!")
         }
         if (target == null) {
-            sendMessage(sender, "&cThat player is not online!")
+            sendMessage(sender, "<red>That player is not online!")
             return
         }
 
         target.isInvulnerable = !target.isInvulnerable
         if (sender != target) {
-            sendMessage(sender, "&7You have &b${if (target.isInvulnerable) "enabled" else "disabled"} &7god mode for &b${target.name}&7!")
+            sendMessage(sender, "<gray>You have <aqua>${if (target.isInvulnerable) "enabled" else "disabled"} <gray>god mode for <aqua>${target.name}<gray>!")
         }
-        sendMessage(target, "&7God mode &b${if (target.isInvulnerable) "enabled" else "disabled"}&7.")
+        sendMessage(target, "<gray>God mode <aqua>${if (target.isInvulnerable) "enabled" else "disabled"}<gray>.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

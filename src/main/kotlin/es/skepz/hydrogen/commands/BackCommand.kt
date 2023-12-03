@@ -6,7 +6,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.Sound
 
-class BackCommand(val core: Hydrogen) : CoreCMD(core, "back", "&c/back",
+class BackCommand(val core: Hydrogen) : CoreCMD(core, "back", "<red>/back",
     0, "hydrogen.command.back", true, false) {
 
         override fun run() {
@@ -15,10 +15,10 @@ class BackCommand(val core: Hydrogen) : CoreCMD(core, "back", "&c/back",
                 player.teleport(core.backLocations[player.uniqueId]!!)
                 core.backLocations.remove(player.uniqueId)
 
-                sendMessage(sender, "&7Teleported to your last location!")
+                sendMessage(sender, "<gray>Teleported to your last location!")
                 playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
             } else {
-                sendMessage(sender, "&cYou don't have anywhere to go back to!")
+                sendMessage(sender, "<red>You don't have anywhere to go back to!")
             }
         }
 

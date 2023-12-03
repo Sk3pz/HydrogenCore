@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "&c/unmute <&7name&c>", 1,
+class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "<red>/unmute <<gray>name<red>>", 1,
     "hydrogen.command.unmute", false, true) {
 
     override fun run() {
@@ -28,16 +28,16 @@ class UnmuteCommand(val core: Hydrogen) : CoreCMD(core, "unmute", "&c/unmute <&7
 
         // check if the player is muted
         if (!file.isMuted()) {
-            sendMessage(sender, "&c$target is not muted!")
+            sendMessage(sender, "<red>$target is not muted!")
             return
         }
 
         // set the player's ban status to true
         file.setUnmuted()
 
-        sendMessage(sender, "&7You have unmuted &b$target.")
+        sendMessage(sender, "<gray>You have unmuted <aqua>$target.")
         if (targetPlayer is Player) {
-            sendMessage(targetPlayer, "&7You have been unmuted by &b$senderName.")
+            sendMessage(targetPlayer, "<gray>You have been unmuted by <aqua>$senderName.")
         }
         Bukkit.getLogger().severe("$senderName has unmuted $target")
     }

@@ -12,7 +12,7 @@ class EventPlayerQuit(val core: Hydrogen) : CoreEvent(core) {
 
     @EventHandler
     fun onJoin(event: PlayerQuitEvent) {
-        event.quitMessage(Component.text(colorize("&8(&c-&8) &7${event.player.name}")))
+        event.quitMessage(colorize("<dark_gray>(<red>-<dark_gray>) <gray>${event.player.name}"))
 
         logout(core, event.player)
     }

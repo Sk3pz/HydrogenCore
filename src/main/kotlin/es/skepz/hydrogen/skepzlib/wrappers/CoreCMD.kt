@@ -21,7 +21,7 @@ abstract class CoreCMD protected constructor(
 
     lateinit var sender: CommandSender
     lateinit var args: ArrayList<String>
-    private var helpMessage: String = "&7Usage: &c$usage"
+    private var helpMessage: String = "<gray>Usage: <red>$usage"
 
     open fun init() {}
     abstract fun run()

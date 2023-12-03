@@ -6,7 +6,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class BalanceCommand(val core: Hydrogen) : CoreCMD(core, "balance", "&c/balance",
+class BalanceCommand(val core: Hydrogen) : CoreCMD(core, "balance", "<red>/balance",
     0, "none", true, false) {
 
     override fun run() {
@@ -15,7 +15,7 @@ class BalanceCommand(val core: Hydrogen) : CoreCMD(core, "balance", "&c/balance"
 
         val moneySymbol = core.files.getMoneySymbol()
 
-        sendMessage(sender, "&7Your balance is &3$moneySymbol&b${file.getBal()}&7.")
+        sendMessage(sender, "<gray>Your balance is <dark_aqua>$moneySymbol<aqua>${file.getBal()}<gray>.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

@@ -2,13 +2,14 @@ package es.skepz.hydrogen.events
 
 import es.skepz.hydrogen.Hydrogen
 import es.skepz.hydrogen.files.UserFile
-import es.skepz.hydrogen.skepzlib.colorize
-import es.skepz.hydrogen.skepzlib.invalid
-import es.skepz.hydrogen.skepzlib.serverBroadcast
+import es.skepz.hydrogen.skepzlib.*
 import es.skepz.hydrogen.skepzlib.wrappers.CoreEvent
 import es.skepz.hydrogen.utils.checkVerification
 import io.papermc.paper.event.player.AsyncChatEvent
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 
 class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
@@ -18,7 +19,7 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
         if (!core.files.config.cfg.getBoolean("custom-chat")) return
 
         event.isCancelled = true
-        var msgPlain = PlainTextComponentSerializer.plainText().serialize(event.message())
+        var msgPlain = deserializeComponent(event.message())
 
         val player = event.player
 
@@ -36,18 +37,20 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
         // mute check
         val file = UserFile(core, player)
         if (file.isMuted()) {
-            invalid(player, "&c&lCannot send message!", "&cYou are muted in this chat.",
-                "&cReason: &f${file.muteReason()}\n" +
-                        (if (file.muteSender() == "none") "" else "&cMuted by: &f${file.muteSender()}\n") +
-                        (if (file.muteTime() == -1L) "&cThis mute is permanent." else "&cMuted until: &f${file.mutedUntil()}"))
+            invalid(player, "<red><bold>Cannot send message!", "<red>You are muted in this chat.",
+                "<red>Reason: <gray>${file.muteReason()}\n" +
+                        (if (file.muteSender() == "none") "" else "<red>Muted by: <gray>${file.muteSender()}\n") +
+                        (if (file.muteTime() == -1L) "<red>This mute is permanent." else "<red>Muted until: <gray>${file.mutedUntil()}"))
             return
         }
 
         val verificationPrefix = if (core.files.config.cfg.getBoolean("verification.enabled")) {
             if (checkVerification(core, player)) {
-                core.files.config.cfg.getString("verification.prefix") ?: "&a&l✔"
+                val fromFile = core.files.config.cfg.getString("verification.prefix") ?: "<green><bold>✔"
+                "$fromFile "
             } else {
-                core.files.config.cfg.getString("verification.unverified-prefix") ?: ""
+                val fromFile = core.files.config.cfg.getString("verification.unverified-prefix") ?: "<red><bold>✘"
+                "$fromFile "
             }
         } else {
             ""
@@ -55,8 +58,8 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
 
         val rank = file.getRank()
         val rankPrefix = core.files.ranks.cfg.getString("ranks.$rank.prefix") ?: ""
-        val nameColor = core.files.ranks.cfg.getString("ranks.$rank.nameColor") ?: "&8"
-        val chatColor = core.files.ranks.cfg.getString("ranks.$rank.chatColor") ?: "&f"
+        val nameColor = core.files.ranks.cfg.getString("ranks.$rank.nameColor") ?: "<dark_gray>"
+        val chatColor = core.files.ranks.cfg.getString("ranks.$rank.chatColor") ?: "<gray>"
 
         // filter chat
         if (core.files.filter.cfg.getBoolean("enabled")) {
@@ -75,10 +78,14 @@ class EventPlayerChat(private val core: Hydrogen): CoreEvent(core) {
         val prefix = if (rankPrefix.isEmpty()) {
             nameColor
         } else {
-            "$rankPrefix $nameColor"
+            "$rankPrefix<reset> $nameColor"
         }
 
-        serverBroadcast("$verificationPrefix $prefix${player.name} &7> $chatColor${colorize(msgPlain)}")
+        if (checkPermission(player, "hydrogen.chat.format")) {
+            core.server.broadcast(colorize("$verificationPrefix<reset>$prefix${player.name}<reset> <gray>» $chatColor$msgPlain"))
+        } else {
+            core.server.broadcast(colorize("$verificationPrefix<reset>$prefix${player.name}<reset> <gray>» $chatColor").append(Component.text(msgPlain)))
+        }
     }
 
 }

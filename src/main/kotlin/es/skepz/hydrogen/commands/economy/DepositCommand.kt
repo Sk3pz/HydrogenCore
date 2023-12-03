@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit <&7amount&c|&7all&c>",
+class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "<red>/deposit <<gray>amount<red>|<gray>all<red>>",
     1, "none", true, true) {
 
     fun removeBlocks(player: Player, amt: Int): Int {
@@ -55,7 +55,7 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
 
     override fun run() {
         if (!core.files.config.cfg.getBoolean("economy.money-is-diamonds"))
-            return sendMessage(sender, "&cThis command is not enabled! (The economy is not based on diamonds)")
+            return sendMessage(sender, "<red>This command is not enabled! (The economy is not based on diamonds)")
 
         val player = getPlayer()!!
 
@@ -77,25 +77,25 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
         if (args[0] == "all") {
             val total = (foundBlocks * 9) + foundDiamonds
 
-            if (total == 0) return sendMessage(sender, "&cYou don't have any diamonds or diamond blocks!")
+            if (total == 0) return sendMessage(sender, "<red>You don't have any diamonds or diamond blocks!")
 
             removeBlocks(player, foundBlocks)
             removeDiamonds(player, foundDiamonds)
 
             file.addToBal(total)
-            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
+            sendMessage(sender, "<gray>You have deposited <dark_aqua>$moneySymbol<aqua>$total<gray>! Balance: <dark_aqua>$moneySymbol<aqua>${file.getBal()}<gray>")
             return
         }
 
-        val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "&cInvalid amount!")
+        val amount = args[0].toIntOrNull() ?: return sendMessage(sender, "<red>Invalid amount!")
         if (args.size == 2 && (args[1] == "blocks" || args[1] == "b" || args[1] == "block")) {
-            if (foundBlocks < amount) return sendMessage(sender, "&cYou don't have enough diamond blocks!")
+            if (foundBlocks < amount) return sendMessage(sender, "<red>You don't have enough diamond blocks!")
             removeBlocks(player, amount)
             val total = amount * 9
             file.addToBal(total)
-            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$total&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
+            sendMessage(sender, "<gray>You have deposited <dark_aqua>$moneySymbol<aqua>$total<gray>! Balance: <dark_aqua>$moneySymbol<aqua>${file.getBal()}<gray>")
         } else {
-            if ((foundDiamonds + (foundBlocks * 9)) < amount) return sendMessage(sender, "&cYou don't have enough diamonds!")
+            if ((foundDiamonds + (foundBlocks * 9)) < amount) return sendMessage(sender, "<red>You don't have enough diamonds!")
             if (foundDiamonds < amount) {
                 val blocksToBreakDown = (amount - foundDiamonds) / 9
                 val remainder = (amount - foundDiamonds) % 9
@@ -107,7 +107,7 @@ class DepositCommand(val core: Hydrogen) : CoreCMD(core, "deposit", "&c/deposit 
 
             removeDiamonds(player, foundDiamonds)
             file.addToBal(amount)
-            sendMessage(sender, "&7You have deposited &3$moneySymbol&b$amount&7! Balance: &3$moneySymbol&b${file.getBal()}&7")
+            sendMessage(sender, "<gray>You have deposited <dark_aqua>$moneySymbol<aqua>$amount<gray>! Balance: <dark_aqua>$moneySymbol<aqua>${file.getBal()}<gray>")
         }
     }
 

@@ -6,7 +6,7 @@ import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
-class TpaCancel(val core: Hydrogen) : CoreCMD(core, "tpcancel", "&c/tpcancel",
+class TpaCancel(val core: Hydrogen) : CoreCMD(core, "tpcancel", "<red>/tpcancel",
     0, "none", true, false) {
 
     override fun run() {
@@ -14,10 +14,10 @@ class TpaCancel(val core: Hydrogen) : CoreCMD(core, "tpcancel", "&c/tpcancel",
         if (core.tpaRequests.containsKey(player.uniqueId)) {
             val target = Bukkit.getPlayer(core.tpaRequests[player.uniqueId]!!)
             if (target != null) {
-                sendMessage(target, "&b${player.name} &7has canceled their request to teleport to you.")
-                sendMessage(sender, "&7You have canceled your request to teleport to &b${target.name}&7.")
+                sendMessage(target, "<aqua>${player.name} <gray>has canceled their request to teleport to you.")
+                sendMessage(sender, "<gray>You have canceled your request to teleport to <aqua>${target.name}<gray>.")
             } else {
-                sendMessage(sender, "&7You have canceled your request.")
+                sendMessage(sender, "<gray>You have canceled your request.")
             }
             core.tpaRequests.remove(player.uniqueId)
             return
@@ -25,16 +25,16 @@ class TpaCancel(val core: Hydrogen) : CoreCMD(core, "tpcancel", "&c/tpcancel",
         if (core.tpahereRequests.containsKey(player.uniqueId)) {
             val target = Bukkit.getPlayer(core.tpahereRequests[player.uniqueId]!!)
             if (target != null) {
-                sendMessage(target, "&b${player.name} &7has canceled their request to teleport you to them.")
-                sendMessage(sender, "&7You have canceled your request to teleport &b${target.name} &7to you.")
+                sendMessage(target, "<aqua>${player.name} <gray>has canceled their request to teleport you to them.")
+                sendMessage(sender, "<gray>You have canceled your request to teleport <aqua>${target.name} <gray>to you.")
             } else {
-                sendMessage(sender, "&7You have canceled your request.")
+                sendMessage(sender, "<gray>You have canceled your request.")
             }
             core.tpaRequests.remove(player.uniqueId)
             return
         }
 
-        sendMessage(sender, "&cYou dont have any outgoing requests.")
+        sendMessage(sender, "<red>You dont have any outgoing requests.")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {

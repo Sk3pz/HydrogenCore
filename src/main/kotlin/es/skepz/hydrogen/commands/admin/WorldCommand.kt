@@ -9,7 +9,7 @@ import org.bukkit.WorldCreator
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7create&c|&7delete&c|&7tp&c|&7list&c>", 1,
+class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "<red>/world <<gray>create<red>|<gray>delete<red>|<gray>tp<red>|<gray>list<red>>", 1,
     "hydrogen.command.world", true, true) {
 
     override fun run() {
@@ -20,7 +20,7 @@ class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7crea
         when (mode) {
             "create" -> {
                 if (args.size < 2) {
-                    sendMessage(player, "&cUsage: &c/world create <&7name&c> <&7optional environment&c> <&7optional seed&c>")
+                    sendMessage(player, "<red>Usage: <red>/world create <<gray>name<red>> <<gray>optional environment<red>> <<gray>optional seed<red>>")
                     return
                 }
                 val name = args[1]
@@ -38,7 +38,7 @@ class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7crea
 
                 val world = core.server.getWorld(name)
                 if (world != null) {
-                    player.sendMessage("&cThe world &f$name &calready exists.")
+                    player.sendMessage("<red>The world <gray>$name <red>already exists.")
                     return
                 }
 
@@ -49,23 +49,23 @@ class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7crea
                     creator.seed(seed)
                 }
 
-                core.server.createWorld(creator) ?: return sendMessage(player, "&cError creating world $name.")
+                core.server.createWorld(creator) ?: return sendMessage(player, "<red>Error creating world $name.")
 
                 // put the world into the config
                 core.files.worlds["worlds.$name.environment"] = environment
                 core.files.worlds["worlds.$name.auto-load"] = true
 
-                sendMessage(player, "&7Created world &b$name&7.")
+                sendMessage(player, "<gray>Created world <aqua>$name<gray>.")
             }
             "delete" -> {
                 if (args.size < 2) {
-                    sendMessage(player, "&cUsage: &f/world create <name>")
+                    sendMessage(player, "<red>Usage: <gray>/world create <name>")
                     return
                 }
                 val name = args[1]
                 val world = core.server.getWorld(name)
                 if (world == null) {
-                    sendMessage(player, "&cThe world &f$name &cdoesn't exist.")
+                    sendMessage(player, "<red>The world <gray>$name <red>doesn't exist.")
                     return
                 }
 
@@ -77,31 +77,31 @@ class WorldCommand(val core: Hydrogen): CoreCMD(core, "world", "&c/world <&7crea
                 val worldFolder = core.server.worldContainer.resolve(name)
                 worldFolder.deleteRecursively()
                 core.files.worlds["worlds.$name"] = null
-                sendMessage(player, "&7Deleted world &b$name&b.")
+                sendMessage(player, "<gray>Deleted world <aqua>$name<aqua>.")
             }
             "tp" -> {
                 if (args.size < 2) {
-                    sendMessage(player, "&cUsage: &f/world create <name>")
+                    sendMessage(player, "<red>Usage: <gray>/world create <name>")
                     return
                 }
                 val name = args[1]
                 val world = core.server.getWorld(name)
                 if (world == null) {
-                    sendMessage(player, "&cThe world &f$name &cdoesn't exist.")
+                    sendMessage(player, "<red>The world <gray>$name <red>doesn't exist.")
                     return
                 }
 
                 player.teleport(world.spawnLocation)
-                sendMessage(player, "&7Teleported to world &b$name&7.")
+                sendMessage(player, "<gray>Teleported to world <aqua>$name<gray>.")
             }
             "list" -> {
                 val worlds = core.server.worlds
                 if (worlds.isEmpty()) {
-                    sendMessage(player, "&cThere are no worlds to list.")
+                    sendMessage(player, "<red>There are no worlds to list.")
                     return
                 }
-                val worldNames = worlds.joinToString("&7, &b") { it.name }
-                sendMessage(player, "&7Worlds: &b$worldNames&7.")
+                val worldNames = worlds.joinToString("<gray>, <aqua>") { it.name }
+                sendMessage(player, "<gray>Worlds: <aqua>$worldNames<gray>.")
             }
         }
 

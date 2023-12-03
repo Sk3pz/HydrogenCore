@@ -1,7 +1,7 @@
 package es.skepz.hydrogen.skepzlib
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import org.bukkit.*
 import org.bukkit.block.BlockFace
@@ -24,8 +24,35 @@ import kotlin.math.min
  * @param str: the raw string to be colorized
  * @return the colorized string
  ***/
-fun colorize(str: String): String {
-    return ChatColor.translateAlternateColorCodes('&', str)
+fun colorize(str: String): Component {
+    val mm = MiniMessage.miniMessage()
+
+    var fstr = str
+        .replace("&0", "<black>")
+        .replace("&1", "<dark_blue>")
+        .replace("&2", "<dark_green>")
+        .replace("&3", "<dark_aqua>")
+        .replace("&4", "<dark_red>")
+        .replace("&5", "<dark_purple>")
+        .replace("&6", "<gold>")
+        .replace("&7", "<gray>")
+        .replace("&8", "<dark_gray>")
+        .replace("&9", "<blue>")
+        .replace("&a", "<green>")
+        .replace("&b", "<aqua>")
+        .replace("&c", "<red>")
+        .replace("&d", "<light_purple>")
+        .replace("&e", "<yellow>")
+        .replace("&f", "<white>")
+        .replace("&k", "<obfuscated>")
+        .replace("&l", "<bold>")
+        .replace("&m", "<strikethrough>")
+        .replace("&n", "<underlined>")
+        .replace("&o", "<italic>")
+        .replace("&r", "<reset>")
+
+    return mm.deserialize(fstr)
+    // return ChatColor.translateAlternateColorCodes('&', str)
 }
 /***
  * Converts all color codes (color code with a '&' in front of it) to minecraft readable color
@@ -331,10 +358,10 @@ fun getEnch(ench: Enchantment): String? {
  * @return the tooltip of the enchantment
  ***/
 fun genEnchTT(raw: String, name: String, goesOn: String, max: Int): String {
-    return "&7${raw.uppercase()}" +
-            "\n&bname: &3$name" +
-            "\n&bgoes on: &3$goesOn" +
-            "\n&bmax value: &3$max"
+    return "<gray>${raw.uppercase()}" +
+            "\n<aqua>name: <dark_aqua>$name" +
+            "\n<aqua>goes on: <dark_aqua>$goesOn" +
+            "\n<aqua>max value: <dark_aqua>$max"
 }
 
 /***

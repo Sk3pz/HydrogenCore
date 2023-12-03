@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "&c/ban <&7name&c> <&7reason&c?>", 1,
+class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "<red>/ban <<gray>name<red>> <<gray>reason<red>?>", 1,
     "hydrogen.command.ban", false, true) {
 
     override fun run() {
@@ -33,7 +33,7 @@ class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "&c/ban <&7name&c> <
 
         // get the target's file
         val file = getOfflineUserFileRaw(core, targetPlayer.uniqueId)
-            ?: return sendMessage(sender, "&cThat player has never joined the server!")
+            ?: return sendMessage(sender, "<red>That player has never joined the server!")
 
         // check the player's rank
         val rank = file.getRank()
@@ -43,7 +43,7 @@ class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "&c/ban <&7name&c> <
         val permissions = core.files.ranks.cfg.getStringList("ranks.$rank.permissions")
         if ((permissions.contains("*") || isOp)
             && !sender.hasPermission("quarkcore.punish-restriction-bypass") && !sender.hasPermission("*")) {
-            sender.sendMessage("&cYou cannot ban this player!")
+            sender.sendMessage("<red>You cannot ban this player!")
             return
         }
 
@@ -53,20 +53,18 @@ class BanCommand(val core: Hydrogen) : CoreCMD(core, "ban", "&c/ban <&7name&c> <
 
         // kick the player if they are online
         if (targetPlayer is Player) {
-            targetPlayer.kick(Component.text(
-                colorize("&cYou are banned from this server!\n" +
-                    "&cReason: &f$reason\n" +
-                    "&cBanned by: &f$senderName\n" +
-                    "&cThis ban is permanent.")
-            ))
+            targetPlayer.kick(colorize("<red>You are banned from this server!\n" +
+                    "<red>Reason: <gray>$reason\n" +
+                    "<red>Banned by: <gray>$senderName\n" +
+                    "<red>This ban is permanent."))
         }
 
-        targetPlayer.banPlayer("&cYou are banned from this server!\n" +
-                "&cReason: &f$reason\n" +
-                "&cBanned by: &f$senderName\n" +
-                "&cThis ban is permanent.")
+        targetPlayer.banPlayer("<red>You are banned from this server!\n" +
+                "<red>Reason: <gray>$reason\n" +
+                "<red>Banned by: <gray>$senderName\n" +
+                "<red>This ban is permanent.")
         
-        sendMessage(sender, "&7You have banned &b$target &7for &b$reason&7.")
+        sendMessage(sender, "<gray>You have banned <aqua>$target <gray>for <aqua>$reason<gray>.")
         Bukkit.getLogger().severe("$senderName has banned $target for $reason")
     }
 

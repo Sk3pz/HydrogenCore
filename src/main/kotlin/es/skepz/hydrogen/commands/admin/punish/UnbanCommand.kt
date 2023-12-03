@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class UnbanCommand(val core: Hydrogen) : CoreCMD(core, "unban", "&c/unban <&7name&c>", 1,
+class UnbanCommand(val core: Hydrogen) : CoreCMD(core, "unban", "<red>/unban <<gray>name<red>>", 1,
     "hydrogen.command.unban", false, false) {
 
     override fun run() {
@@ -32,7 +32,7 @@ class UnbanCommand(val core: Hydrogen) : CoreCMD(core, "unban", "&c/unban <&7nam
         file.setUnbanned()
         Bukkit.getBanList<ProfileBanList>(BanList.Type.PROFILE).pardon(targetPlayer.playerProfile)
 
-        sendMessage(sender, "&7You have unbanned &b$target.")
+        sendMessage(sender, "<gray>You have unbanned <aqua>$target.")
         Bukkit.getLogger().severe("$senderName has unbanned $target")
     }
 }

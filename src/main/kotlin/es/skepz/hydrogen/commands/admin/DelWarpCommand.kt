@@ -10,7 +10,7 @@ import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import java.util.ArrayList
 
-class DelWarpCommand(val core: Hydrogen) : CoreCMD(core, "delwarp", "&c/delwarp <&7name&c>",
+class DelWarpCommand(val core: Hydrogen) : CoreCMD(core, "delwarp", "<red>/delwarp <<gray>name<red>>",
     1, "hydrogen.command.delwarp", true, false) {
 
     override fun init() {
@@ -23,19 +23,19 @@ class DelWarpCommand(val core: Hydrogen) : CoreCMD(core, "delwarp", "&c/delwarp 
 
         for (c in name) {
             if (c !in 'A'..'Z' && c !in 'a'..'z' && c !in '0'..'9' && c != '_') {
-                sendMessage(player, "&cFailed to delete warp: &f$name&c is not a valid name! must only contain a-z, 0-9 or underscores!")
+                sendMessage(player, "<red>Failed to delete warp: <gray>$name<red> is not a valid name! must only contain a-z, 0-9 or underscores!")
                 return
             }
         }
 
         // check if the home exists
         if (!warpExists(core, name)) {
-            sendMessage(player, "&cYou do not have any warps with that name!")
+            sendMessage(player, "<red>You do not have any warps with that name!")
             return
         }
 
         delWarp(core, name)
-        sendMessage(player, "&7Removed your warp!")
+        sendMessage(player, "<gray>Removed your warp!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }
 

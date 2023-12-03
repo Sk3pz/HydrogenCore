@@ -14,7 +14,7 @@ import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
 class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
-    "&c/tempban <&7name&c> <&7time&c> <&7seconds&c|&7minutes&c|&7hours&c|&7days&c|&7years&c> <&7reason&c?>", 3,
+    "<red>/tempban <<gray>name<red>> <<gray>time<red>> <<gray>seconds<red>|<gray>minutes<red>|<gray>hours<red>|<gray>days<red>|<gray>years<red>> <<gray>reason<red>?>", 3,
     "hydrogen.command.tempban", false, true) {
 
     override fun run() {
@@ -25,7 +25,7 @@ class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
         else "Console"
 
         var time = args[1].toLongOrNull() ?: run {
-            sendMessage(sender, "&cInvalid time!")
+            sendMessage(sender, "<red>Invalid time!")
             return
         }
 
@@ -38,7 +38,7 @@ class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
             "days", "day" -> time *= 86400000
             "years", "year" -> time *= 31536000000
             else -> {
-                sendMessage(sender, "&cInvalid time denominator!")
+                sendMessage(sender, "<red>Invalid time denominator!")
                 return
             }
         }
@@ -65,7 +65,7 @@ class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
         val permissions = core.files.ranks.cfg.getStringList("ranks.$rank.permissions")
         if ((permissions.contains("*") || isOp)
             && !sender.hasPermission("quarkcore.punish-restriction-bypass") && !sender.hasPermission("*")) {
-            sender.sendMessage("&cYou cannot ban this player!")
+            sender.sendMessage("<red>You cannot ban this player!")
             return
         }
 
@@ -75,16 +75,13 @@ class TempBanCommand(val core: Hydrogen) : CoreCMD(core, "tempban",
 
         // kick the player if they are online
         if (targetPlayer is Player) {
-            targetPlayer.kick(
-                Component.text(
-                colorize("&cYou are banned from this server!\n" +
-                        "&cReason: &f$reason\n" +
-                        "&cBanned by: &f$senderName\n" +
-                        "&cYou will be unbanned in &f$rawTime&c.")
-            ))
+            targetPlayer.kick(colorize("<red>You are banned from this server!\n" +
+                        "<red>Reason: <gray>$reason\n" +
+                        "<red>Banned by: <gray>$senderName\n" +
+                        "<red>You will be unbanned in <gray>$rawTime<red>."))
         }
 
-        sendMessage(sender, "&7You have banned &b$target &7for &b$reason&7 for &b$rawTime&7.")
+        sendMessage(sender, "<gray>You have banned <aqua>$target <gray>for <aqua>$reason<gray> for <aqua>$rawTime<gray>.")
         Bukkit.getLogger().severe("$senderName has banned $target for $reason for $rawTime.")
     }
 

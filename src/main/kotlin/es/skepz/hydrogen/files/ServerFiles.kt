@@ -44,7 +44,7 @@ class ServerFiles(private val plugin: Hydrogen) {
         // verification
         config.default("verification.enabled", false)
         config.default("verification.prefix", "&a&l✔")
-        config.default("verification.unverified-prefix", "&c&l✘")
+        config.default("verification.unverified-prefix", "&4&l✘")
         config.default("verification.verified-perms", listOf(""))
 
         val file = File(plugin.dataFolder.toString(), "ranks.yml")

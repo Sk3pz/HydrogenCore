@@ -13,12 +13,12 @@ import org.bukkit.util.StringUtil
 import java.util.*
 import kotlin.collections.HashMap
 
-class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpaccept <&7player&c?>",
+class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "<red>/tpaccept <<gray>player<red>?>",
     0, "none", true, true) {
 
     fun teleport(target: Player, tpr: Player) {
-        sendMessage(target, "&7Teleported &b${tpr.name} &7to you.")
-        sendMessage(tpr, "&7Whoosh! You have been teleported to &b${target.name}&7!")
+        sendMessage(target, "<gray>Teleported <aqua>${tpr.name} <gray>to you.")
+        sendMessage(tpr, "<gray>Whoosh! You have been teleported to <aqua>${target.name}<gray>!")
         tpr.teleport(target.location)
         playSound(tpr, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }
@@ -44,7 +44,7 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
         if (args.size > 0) {
             val requester = Bukkit.getPlayer(args[0])
             if (requester == null) {
-                sendMessage(sender, "&cThat player either is not online or does not exist!")
+                sendMessage(sender, "<red>That player either is not online or does not exist!")
                 return
             }
 
@@ -61,7 +61,7 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
                 return
             }
 
-            sendMessage(sender, "&cYou don't currently have any requests from this person. Maybe they canceled their request?")
+            sendMessage(sender, "<red>You don't currently have any requests from this person. Maybe they canceled their request?")
             return
         }
 
@@ -75,7 +75,7 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
             val requester = Bukkit.getPlayer(ruid)
             if (requester == null) {
                 // inform player
-                sendMessage(sender, "&cThat player could not be found. They probably logged off.")
+                sendMessage(sender, "<red>That player could not be found. They probably logged off.")
                 return
             }
             teleport(player, requester)
@@ -89,7 +89,7 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
             val requester = Bukkit.getPlayer(ruid)
             if (requester == null) {
                 // inform player
-                sendMessage(sender, "&cThat player could not be found. They probably logged off.")
+                sendMessage(sender, "<red>That player could not be found. They probably logged off.")
                 return
             }
             teleport(requester, player)
@@ -97,9 +97,9 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
         }
 
         // multiple requests, give them a list
-        val imsg = IMessage("&cYou have multiple requests. Use /tpdeny <name> to specify which one.\n&7&lChoose which request to accept:\n")
+        val imsg = IMessage("<red>You have multiple requests. Use /tpdeny <name> to specify which one.\n<gray><bold>Choose which request to accept:\n")
         if (requests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport to you:\n")
+            imsg.add(" <gray>> Requesting to teleport to you:\n")
             var x = 0
             for ((r, _) in requests) {
                 val p = Bukkit.getPlayer(r)
@@ -107,9 +107,9 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
                     core.tpaRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != requests.size - 1) {
                     imsg.add("\n")
                 }
@@ -117,7 +117,7 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
             }
         }
         if (hereRequests.isNotEmpty()) {
-            imsg.add(" &7> Requesting to teleport you to them:\n")
+            imsg.add(" <gray>> Requesting to teleport you to them:\n")
             var x = 0
             for ((r, _) in hereRequests) {
                 val p = Bukkit.getPlayer(r)
@@ -125,9 +125,9 @@ class TpacceptCommand(val core: Hydrogen) : CoreCMD(core, "tpaccept", "&c/tpacce
                     core.tpahereRequests.remove(r)
                     continue
                 }
-                imsg.add(" | &b${p.name} ")
-                    .addHoverableClickCmd("&aAccept ", "/tpaccept ${p.name}", "&7Accept the request from &b${p.name}")
-                    .addHoverableClickCmd("&cDeny", "/tpdeny ${p.name}", "&7Deny the request from &b${p.name}")
+                imsg.add(" | <aqua>${p.name} ")
+                    .addHoverableClickCmd("<green>Accept ", "/tpaccept ${p.name}", "<gray>Accept the request from <aqua>${p.name}")
+                    .addHoverableClickCmd("<red>Deny", "/tpdeny ${p.name}", "<gray>Deny the request from <aqua>${p.name}")
                 if (x != hereRequests.size - 1) {
                     imsg.add("\n")
                 }

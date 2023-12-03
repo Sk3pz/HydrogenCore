@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 import java.util.ArrayList
 
-class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome <&7name&c>",
+class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "<red>/delhome <<gray>name<red>>",
     1, "none", true, false) {
 
     override fun run() {
@@ -20,7 +20,7 @@ class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome 
 
         for (c in name) {
             if (c !in 'A'..'Z' && c !in 'a'..'z' && c !in '0'..'9' && c != '_') {
-                sendMessage(player, "&cFailed to delete home: &f$name&c is not a valid name! must only contain a-z, 0-9 or underscores!")
+                sendMessage(player, "<red>Failed to delete home: <gray>$name<red> is not a valid name! must only contain a-z, 0-9 or underscores!")
                 return
             }
         }
@@ -29,12 +29,12 @@ class DelHomeCommand(val core: Hydrogen) : CoreCMD(core, "delhome", "&c/delhome 
 
         // check if the home exists
         if (!file.homeExists(name)) {
-            sendMessage(player, "&cYou do not have any homes with that name!")
+            sendMessage(player, "<red>You do not have any homes with that name!")
             return
         }
 
         file.delHome(name)
-        sendMessage(player, "&7Removed your home!")
+        sendMessage(player, "<gray>Removed your home!")
         playSound(player, Sound.BLOCK_NOTE_BLOCK_BELL, 5, 1.0f)
     }
 

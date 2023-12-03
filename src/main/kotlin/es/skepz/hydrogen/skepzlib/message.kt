@@ -1,10 +1,8 @@
 package es.skepz.hydrogen.skepzlib
 
-import net.md_5.bungee.api.ChatMessageType
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.ComponentBuilder
-import net.md_5.bungee.api.chat.HoverEvent
-import net.md_5.bungee.api.chat.TextComponent
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -24,7 +22,7 @@ fun sendMessage(user: CommandSender, message: String) {
  * @param message: the message to display
  ***/
 fun actionbar(player: Player, message: String) {
-    player.sendMessage(ChatMessageType.ACTION_BAR, TextComponent(colorize(message)))
+    player.sendActionBar(colorize(message))
 }
 
 /***
@@ -34,11 +32,11 @@ fun actionbar(player: Player, message: String) {
  * @return the finished usage string
  ***/
 fun genUsage(usage: String, vararg argSections: List<String>): String {
-    var fin = "&c/$usage <"
+    var fin = "<red>/$usage <"
     for (sec in argSections)
         for (x in 0..sec.size)
-            fin += if (x != sec.size - 1) "&f${sec[x]}&c|" else "&f${sec[x]}"
-    return "$fin&c>"
+            fin += if (x != sec.size - 1) "<gray>${sec[x]}<red>|" else "<gray>${sec[x]}"
+    return "$fin<red>>"
 }
 
 /***
@@ -47,7 +45,7 @@ fun genUsage(usage: String, vararg argSections: List<String>): String {
  * @param usage: the correct usage of the command
  ***/
 fun invalidCmdUsage(user: CommandSender, usage: String) {
-    sendMessage(user, "&cInvalid Use! Usage: &f$usage")
+    sendMessage(user, "<red>Invalid Use! Usage: <gray>$usage")
 }
 
 /***
@@ -55,7 +53,7 @@ fun invalidCmdUsage(user: CommandSender, usage: String) {
  * @param user: the user to send the message to
  ***/
 fun noPerms(user: CommandSender) {
-    sendMessage(user, "&cYou don't have permission to use this command!")
+    sendMessage(user, "<red>You don't have permission to use this command!")
 }
 
 /***
@@ -63,7 +61,7 @@ fun noPerms(user: CommandSender) {
  * @param user: the user to send the message to
  ***/
 fun notPlayer(user: CommandSender) {
-    sendMessage(user, "&cThis player is either not online or does not exist!")
+    sendMessage(user, "<red>This player is either not online or does not exist!")
 }
 
 /***
@@ -71,7 +69,7 @@ fun notPlayer(user: CommandSender) {
  * @param user: the user to send the message to
  ***/
 fun requirePlayer(user: CommandSender) {
-    sendMessage(user, "&cYou must be a player to use this command!")
+    sendMessage(user, "<red>You must be a player to use this command!")
 }
 
 /***
@@ -87,7 +85,7 @@ fun sendConsoleMessage(msg: String) {
  * @param msg: the message to send
  ***/
 fun serverBroadcast(msg: String) {
-    Bukkit.getServer().broadcastMessage(colorize(msg))
+    Bukkit.getServer().broadcast(colorize(msg))
 }
 
 /**
@@ -95,13 +93,13 @@ fun serverBroadcast(msg: String) {
  **/
 class IMessage {
     private var smsg: String
-    private var textComponent: TextComponent
+    private var textComponent: Component
     /***
      * the default constructor, initialises the start message as an empty string
      ***/
     constructor() {
         smsg = ""
-        textComponent = TextComponent(smsg)
+        textComponent = Component.text(smsg)
     }
     /***
      * The secondary constructor
@@ -109,7 +107,7 @@ class IMessage {
      ***/
     constructor(start: String) {
         smsg = start
-        textComponent = TextComponent(colorize(smsg))
+        textComponent = colorize(smsg)
     }
 
     /***
@@ -118,7 +116,8 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun setDefaultHover(toolTip: String): IMessage {
-        textComponent.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(colorize(toolTip)).create())
+        //textComponent.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(colorize(toolTip)).create())
+        textComponent = textComponent.hoverEvent(HoverEvent.showText(colorize(toolTip)))
         return this
     }
 
@@ -128,7 +127,7 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun setDefaultClick(link: String): IMessage {
-        textComponent.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, link)
+        textComponent = textComponent.clickEvent(ClickEvent.openUrl(link))
         return this
     }
 
@@ -138,7 +137,7 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun setDefaultCmd(cmd: String): IMessage {
-        textComponent.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd)
+        textComponent = textComponent.clickEvent(ClickEvent.runCommand(cmd))
         return this
     }
 
@@ -148,7 +147,7 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun add(msg: String): IMessage {
-        textComponent.addExtra(TextComponent(colorize(msg)))
+        textComponent = textComponent.append(colorize(msg))
         return this
     }
 
@@ -159,9 +158,9 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun addHoverable(msg: String, toolTip: String): IMessage {
-        val tc = TextComponent(colorize(msg))
-        tc.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(colorize(toolTip)).create())
-        textComponent.addExtra(tc)
+        var tc = colorize(msg)
+        tc = tc.hoverEvent(HoverEvent.showText(colorize(toolTip)))
+        textComponent = textComponent.append(tc)
         return this
     }
 
@@ -172,9 +171,35 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun addClickCmd(msg: String, command: String): IMessage {
-        val tc = TextComponent(colorize(msg))
-        tc.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
-        textComponent.addExtra(tc)
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.runCommand(command))
+        textComponent = textComponent.append(tc)
+        return this
+    }
+
+    /***
+     * adds a message which will suggest a command upon being clicked
+     * @param msg: the message that can be clicked
+     * @param command: the command to be suggested on click
+     * @return returns this object for chaining message types
+     */
+    fun addSuggestCmd(msg: String, command: String): IMessage {
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.suggestCommand(command))
+        textComponent = textComponent.append(tc)
+        return this
+    }
+
+    /***
+     * adds a message that will copy a string to the clipboard upon being clicked
+     * @param msg: the message to be displayed
+     * @param copy: the string to be copied to the clipboard
+     * @return returns this object for chaining message types
+     ***/
+    fun addCopyClick(msg: String, copy: String): IMessage {
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.copyToClipboard(copy))
+        textComponent = textComponent.append(tc)
         return this
     }
 
@@ -186,10 +211,10 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun addHoverableClickCmd(msg: String, command: String, toolTip: String): IMessage {
-        val tc = TextComponent(colorize(msg))
-        tc.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
-        tc.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(colorize(toolTip)).create())
-        textComponent.addExtra(tc)
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.runCommand(command))
+        tc = tc.hoverEvent(HoverEvent.showText(colorize(toolTip)))
+        textComponent = textComponent.append(tc)
         return this
     }
 
@@ -200,9 +225,9 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun addLink(msg: String, link: String): IMessage {
-        val tc = TextComponent(colorize(msg))
-        tc.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, link)
-        textComponent.addExtra(tc)
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.openUrl(link))
+        textComponent = textComponent.append(tc)
         return this
     }
 
@@ -214,10 +239,10 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun addHoverableLink(msg: String, link: String, toolTip: String): IMessage {
-        val tc = TextComponent(colorize(msg))
-        tc.clickEvent = ClickEvent(ClickEvent.Action.OPEN_URL, link)
-        tc.hoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ComponentBuilder(colorize(toolTip)).create())
-        textComponent.addExtra(tc)
+        var tc = colorize(msg)
+        tc = tc.clickEvent(ClickEvent.openUrl(link))
+        tc = tc.hoverEvent(HoverEvent.showText(colorize(toolTip)))
+        textComponent = textComponent.append(tc)
         return this
     }
 
@@ -231,20 +256,12 @@ class IMessage {
     }
 
     /***
-     * get the text component
-     * @return returns the text component for more customization
-     ***/
-    fun build(): TextComponent {
-        return textComponent
-    }
-
-    /***
      * send the full message to a player
      * @param player: the player to send the message to
      * @return returns this object for chaining message types
      ***/
     fun send(player: Player): IMessage {
-        player.spigot().sendMessage(build())
+        player.sendMessage(textComponent)
         return this
     }
 
@@ -253,7 +270,7 @@ class IMessage {
      * @return returns this object for chaining message types
      ***/
     fun broadcast(): IMessage {
-        for (player in Bukkit.getOnlinePlayers()) send(player)
+        Bukkit.getServer().broadcast(textComponent)
         return this
     }
 }
@@ -266,10 +283,10 @@ class IMessage {
  * @param toolTip: what to be displayed on hover
  ***/
 fun info(user: Player, title: String, subtitle: String, toolTip: String) {
-    IMessage("&3$title").newLine()
-            .add("&b$subtitle")
+    IMessage("<dark_aqua>$title").newLine()
+            .add("<aqua>$subtitle")
             .newLine().newLine()
-            .addHoverable(" &7&o[?] Hover over this for more information", toolTip)
+            .addHoverable(" <gray>&o[?] Hover over this for more information", toolTip)
             .send(user)
 }
 
@@ -281,9 +298,9 @@ fun info(user: Player, title: String, subtitle: String, toolTip: String) {
  * @param toolTip: what to be displayed on hover
  ***/
 fun invalid(user: Player, title: String, subtitle: String, toolTip: String) {
-    IMessage("&c$title").newLine()
-            .add("&f$subtitle")
+    IMessage("<red>$title").newLine()
+            .add("<gray>$subtitle")
             .newLine().newLine()
-            .addHoverable(" &7&o[?] Hover over this for more information", toolTip)
+            .addHoverable(" <gray>&o[?] Hover over this for more information", toolTip)
             .send(user)
 }

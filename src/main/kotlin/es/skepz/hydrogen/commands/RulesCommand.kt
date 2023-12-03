@@ -5,7 +5,7 @@ import es.skepz.hydrogen.skepzlib.sendMessage
 import es.skepz.hydrogen.skepzlib.wrappers.CoreCMD
 import org.bukkit.command.CommandSender
 
-class RulesCommand(val core: Hydrogen) : CoreCMD(core, "rules", "&c/rules", 0,
+class RulesCommand(val core: Hydrogen) : CoreCMD(core, "rules", "<red>/rules", 0,
     "none", true, false) {
 
     override fun run() {
@@ -15,9 +15,9 @@ class RulesCommand(val core: Hydrogen) : CoreCMD(core, "rules", "&c/rules", 0,
         val rules = core.files.rules.cfg.getStringList("rules")
 
         // send the rules to the player
-        val listDisplay = rules.joinToString("\n") { "&7- &f$it" }
+        val listDisplay = rules.joinToString("\n") { "<gray>- <gray>$it" }
 
-        sendMessage(player, "&7&lRules:\n$listDisplay")
+        sendMessage(player, "<gray><bold>Rules:\n$listDisplay")
     }
 
     override fun registerTabComplete(sender: CommandSender, args: Array<String>): List<String> {
