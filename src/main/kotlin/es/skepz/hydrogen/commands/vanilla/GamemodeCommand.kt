@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
 class GamemodeCommand(val core: Hydrogen) : CoreCMD(core, "gamemode", "<red>/gamemode <<gray>gm<red>> <<gray>player?<red>>", 1,
-    "hydrogen.command.fly", false, true) {
+    "hydrogen.command.gamemode", false, true) {
 
     override fun run() {
         var other = false
