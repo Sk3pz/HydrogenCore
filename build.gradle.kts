@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.20"
-    //id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.github.goooler.shadow") version "8.1.7"
 }
 
 group = "es.skepz"
@@ -21,12 +21,12 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
-//tasks {
-//    shadowJar {
-//        relocate("org.jetbrains", "es.skepz.hydrogen.libs.org.jetbrains")
-//        relocate("org.intellij", "es.skepz.hydrogen.libs.org.intellij")
-//        relocate("com.google", "es.skepz.hydrogen.libs.com.google")
-//        relocate("com.moandjiezana", "es.skepz.hydrogen.libs.com.moandjiezana")
-//        relocate("kotlin", "es.skepz.hydrogen.libs.kotlin")
-//    }
-//}
+tasks {
+    shadowJar {
+        relocate("org.jetbrains", "es.skepz.hydrogen.libs.org.jetbrains")
+        relocate("org.intellij", "es.skepz.hydrogen.libs.org.intellij")
+        relocate("com.google", "es.skepz.hydrogen.libs.com.google")
+        relocate("com.moandjiezana", "es.skepz.hydrogen.libs.com.moandjiezana")
+        relocate("kotlin", "es.skepz.hydrogen.libs.kotlin")
+    }
+}
